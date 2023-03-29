@@ -1,0 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#app {
+    @apply bg-blue-400 h-[100vh] w-full flex justify-center items-center;
+}
