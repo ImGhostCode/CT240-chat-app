@@ -1,3 +1,3 @@
 <template>
-    search
+    <input type="text" placeholder="Find a user" class="p-3 bg-transparent outline-none placeholder:text-white border-b-2 border-slate-400 text-white" >
 </template>

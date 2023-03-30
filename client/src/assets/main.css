@@ -8,3 +8,11 @@
 #app {
     @apply bg-blue-400 h-[100vh] w-full flex justify-center items-center;
 }
+
+.message_left {
+    @apply bg-white rounded-tr-none text-right
+}
+
+.message_right {
+    @apply  bg-blue-500 rounded-tr-none text-left text-white
+}
