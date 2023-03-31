@@ -19,9 +19,8 @@
             <div class="text-lg mr-3">im ghost</div>
             <button class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
         </div>
-</div>
-<Profile v-if="isShowEditProfile" :toggleEditProfile="toggleEditProfile"/>
-
+    </div>
+    <Profile v-if="isShowEditProfile" @toggleEditProfile="toggleEditProfile" />
 </template>
 
 <script setup>
@@ -32,4 +31,5 @@ const isShowEditProfile = ref(false)
 
 function toggleEditProfile() {
     isShowEditProfile.value = !isShowEditProfile.value
-}</script>
+}
+</script>
