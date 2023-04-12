@@ -1,0 +1,27 @@
+@urlDev=http://localhost:3051/api/v1/users
+
+
+### allUsers
+GET {{urlDev}}/?search=test
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+
+### Register
+POST  {{urlDev}}/register
+Content-Type: application/json
+
+{
+    "name": "ghost",
+    "email": "test@gmail.com",
+    "password": "123456",
+    "pic": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fps.w.org%2Fuser-avatar-reloaded%2Fassets%2Ficon-256x256.png%3Frev%3D2540745&tbnid=4tCxPvBodOnWbM&vet=12ahUKEwjc-4Tr6pb-AhWx93MBHbhpA8EQMygOegUIARDfAQ..i&imgrefurl=https%3A%2F%2Fis.wordpress.org%2Fplugins%2Fuser-avatar-reloaded%2F&docid=9MV4mY-wsJayeM&w=257&h=257&itg=1&q=avatar%20user&client=ubuntu-sn&ved=2ahUKEwjc-4Tr6pb-AhWx93MBHbhpA8EQMygOegUIARDfAQ"
+}
+
+
+### Login
+POST  {{urlDev}}/login
+Content-Type: application/json
+
+{
+    "email": "test3@gmail.com",
+    "password": "123456"
+}

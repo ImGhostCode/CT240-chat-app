@@ -1,0 +1,57 @@
+@urlDev=http://localhost:3051/api/v1/conversations
+
+### fetch all conversations 
+GET {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+
+### Access a conversation
+POST {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Content-Type: application/json
+
+
+{
+    "userId": "642f8f40303193f59ca58715"
+}
+
+### create a group
+POST {{urlDev}}/create-group
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Content-Type: application/json
+
+{
+    "users": [
+        "642f8efa6bfd778dfb038e09",
+        "64301f48ac86fc9a842017e4"
+    ],
+    "name": "Group 2"
+}
+
+### rename a group
+PUT {{urlDev}}/rename-group
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Content-Type: application/json
+
+{
+    "conversationId": "6431832890bfe6ca5d7a38d0",
+    "newConversationName": "Group 1 update 2"
+}
+
+### add members to a group
+PUT {{urlDev}}/add-member
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Content-Type: application/json
+
+{
+    "conversationId": "6431832890bfe6ca5d7a38d0",
+    "userId": "64301f48ac86fc9a842017e4" 
+}
+### remove a member from a group
+DELETE  {{urlDev}}/remove-member
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Content-Type: application/json
+
+{
+    "conversationId": "6431832890bfe6ca5d7a38d0",
+    "userId": "64301f48ac86fc9a842017e4" 
+}
