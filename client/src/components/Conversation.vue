@@ -2,10 +2,21 @@
 import Messages from './Messages.vue';
 import Input from './Input.vue';
 import MessagesGroup from './MessagesGroup.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted, watchEffect } from 'vue';
 import AddMembers from './AddMembers.vue';
 import EditGroup from './EditGroup.vue';
+import { useConversationStore } from "../stores/conversation.store";
+import { useAuthStore } from "./../stores/auth.store.js";
+import { useMessageStore } from './../stores/message.store'
+import io from "socket.io-client";
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
+const ENDPOINT = "http://localhost:3051";
+const messageStore = useMessageStore()
+const conversationStore = useConversationStore()
+const authStore = useAuthStore()
 
+let socket
 const isShow = reactive({
   more: false,
   addMembers: false,
@@ -23,13 +34,44 @@ function toggleAddMembers() {
 function toggleEditGroup() {
   isShow.editGroup = !isShow.editGroup
 }
+
+async function sendMessage(content) {
+  await messageStore.sendAMessage(content, conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
+  socket.emit("new message", messageStore.newMessage);
+
+}
+
+const socketConnected = ref(false)
+const isTyping = ref(false)
+
+onMounted(async () => {
+
+  socket = io(ENDPOINT);
+  socket.on("message recieved", newMessageRecieved => {
+    messageStore.messages.push(newMessageRecieved)
+  });
+  watchEffect(async () => {
+    socket.emit("setup", authStore.user);
+    socket.on("connected", () => socketConnected.value = true);
+    socket.on("typing", () => isTyping.value = true);
+    socket.on("stop typing", () => isTyping.value = false);
+
+    if (conversationStore.activeIndex !== null) {
+      socket.emit("join chat", conversationStore.conversations[conversationStore.activeIndex]._id);
+      await messageStore.fetchMessages(conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
+    }
+
+  })
+
+})
+
 </script>
 
 
 <template>
-  <div class="basis-2/3 flex flex-col">
+  <div class="basis-2/3 flex flex-col" v-if="conversationStore.activeIndex !== null">
     <div class="h-[50px] bg-indigo-800 text-white w-full flex justify-between items-center px-3 py-8">
-      <h2 class="text-2xl">Tyler</h2>
+      <h2 class="text-2xl">{{ conversationStore.conversations[conversationStore.activeIndex].conversationName }}</h2>
       <div class="flex relative">
         <span class="mx-2 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -57,7 +99,7 @@ function toggleEditGroup() {
             </span>
             Unfriend
           </li>
-          <div class="group" v-if="true">
+          <div class="group" v-if="conversationStore.conversations[conversationStore.activeIndex].isGroupChat">
 
             <li @click="toggleAddMembers" class="p-3 flex mb-1 cursor-pointer shadow-sm"><span
                 class="inline-block cursor-pointer mr-3">
@@ -97,10 +139,15 @@ function toggleEditGroup() {
       </div>
     </div>
 
-    <Messages />
-    <!-- <MessagesGroup/> -->
-    <Input />
+    <Messages v-if="!conversationStore.conversations[conversationStore.activeIndex].isGroupChat" />
+    <MessagesGroup v-if="conversationStore.conversations[conversationStore.activeIndex].isGroupChat" />
+    <Input :sendMessage="sendMessage" />
   </div>
+  <div class="" v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
+  <div class="" v-else-if="conversationStore.isLoading">Loading...</div>
+  <div class=" h-full w-full flex justify-center items-center font-semibold text-2xl text-gray-400" v-else>Select a
+    conversation to
+    start chat</div>
 
   <AddMembers v-if="isShow.addMembers" @show="toggleAddMembers" />
   <EditGroup v-if="isShow.editGroup" @show="toggleEditGroup" />

@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-between items-center">
-        <input type="text" placeholder="Type somethings..." class="px-3 py-4 w-full">
+        <input v-model="newMessage" type="text" placeholder="Type somethings..." class="px-3 py-4 w-full">
         <div class="flex gap-4 mx-4">
             <span>
                 <label for="images">
@@ -11,7 +11,7 @@
                     </svg> <input type="file" name="images" id="images" hidden multiple>
                 </label>
             </span>
-            <span>
+            <span @click="handleClickSend">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6 cursor-pointer">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -21,3 +21,15 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+const props = defineProps(['sendMessage'])
+const newMessage = ref('')
+
+function handleClickSend() {
+    props.sendMessage(newMessage.value)
+    newMessage.value = ''
+}
+
+</script>

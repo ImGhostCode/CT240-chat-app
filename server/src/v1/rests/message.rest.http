@@ -1,0 +1,16 @@
+@urlDev=http://localhost:3051/api/v1/messages
+
+### fetch all message in a conversation
+GET {{urlDev}}/64317d42639b741e184c0001
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+
+
+###  send a message to a conversation
+POST {{urlDev}}/send-message
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZjQwMzAzMTkzZjU5Y2E1ODcxNSIsImlhdCI6MTY4MDk2OTY4NiwiZXhwIjoxNjgxMDU2MDg2fQ.AdZ0WM1xB5GBKds5vRZVrsqZT99H4L_FxZckQAXVjoo
+Content-Type: application/json
+
+{
+    "content": "alo alo test1",
+    "conversationId": "64317d42639b741e184c0001"
+}

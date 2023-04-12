@@ -13,10 +13,9 @@
 
         <div class="flex justify-center items-center">
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer">
-                <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
-                    class="h-full w-full">
+                <img :src="authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
-            <div class="text-lg mr-3">im ghost</div>
+            <div class="text-lg mr-3">{{ authStore.user.name }}</div>
             <button class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
         </div>
     </div>
@@ -26,8 +25,10 @@
 <script setup>
 import { ref } from 'vue';
 import Profile from './Profile.vue';
+import { useAuthStore } from '../stores/auth.store';
 
 const isShowEditProfile = ref(false)
+const authStore = useAuthStore()
 
 function toggleEditProfile() {
     isShowEditProfile.value = !isShowEditProfile.value
