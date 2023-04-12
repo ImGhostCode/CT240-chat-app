@@ -32,7 +32,8 @@ export const useConversationStore = defineStore("conversation", () => {
             const isExist = conversations.value.findIndex(tes => tes._id === res.data._id)
             console.log(isExist);
             if (isExist === -1) {
-                activeIndex.value = 0
+                conversations.value.push(res.data)
+                activeIndex.value = conversations.value.length - 1
             } else {
                 activeIndex.value = isExist
             }

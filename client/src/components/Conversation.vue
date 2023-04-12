@@ -37,6 +37,7 @@ function toggleEditGroup() {
 
 async function sendMessage(content) {
   await messageStore.sendAMessage(content, conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
+  // await conversationStore.fetchAllConversations()
   socket.emit("new message", messageStore.newMessage);
 
 }

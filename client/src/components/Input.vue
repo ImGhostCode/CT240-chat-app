@@ -1,6 +1,7 @@
 <template>
     <div class="flex justify-between items-center">
-        <input v-model="newMessage" type="text" placeholder="Type somethings..." class="px-3 py-4 w-full">
+        <input v-model="newMessage" type="text" placeholder="Type somethings..." class="px-3 py-4 w-full"
+            @keyup.enter="handleClickSend">
         <div class="flex gap-4 mx-4">
             <span>
                 <label for="images">

@@ -5,13 +5,16 @@
       :class="(index === conversationStore.activeIndex) ? 'bg-indigo-800' : 'bg-indigo-600'"
       @click="conversationStore.activeIndex = index">
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
-        <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
-          class="h-full w-full">
+        <img :src="getSenderFull(authStore.user, conversation.users).pic" alt="avatar" class="h-full w-full">
       </div>
       <div class="flex flex-col ml-2">
-        <h2 class="text-xl font-semibold">{{ conversation.conversationName }}</h2>
-        <p v-if="conversation.latestMessage">{{ conversation.latestMessage.sender.name }}: {{
-          conversation.latestMessage.content }}</p>
+        <h2 class="text-xl font-semibold">{{ !conversation.isGroupChat
+          ? getSender(authStore.user, conversation.users)
+          : conversation.conversationName }} </h2>
+        <p v-if="conversation.latestMessage"> {{ conversation.latestMessage.sender._id === authStore.user._id ? 'You' :
+          conversation.latestMessage.sender.name }}: {{
+    conversation.latestMessage.content.lenght > 50 ? conversation.latestMessage.content.substring(0, 51) + '...' :
+    conversation.latestMessage.content }}</p>
       </div>
     </div>
   </div>
@@ -24,13 +27,14 @@
 import { onMounted, watchEffect, watch, ref } from "vue";
 import { useConversationStore } from "../stores/conversation.store";
 import { useAuthStore } from "./../stores/auth.store.js";
+import { getSender, getSenderFull } from "../utils/ChatLogics";
 
 
 const conversationStore = useConversationStore()
+const authStore = useAuthStore()
 
 
 onMounted(async () => {
-  const authStore = useAuthStore()
 
   await conversationStore.fetchAllConversations(authStore.user.token)
 
