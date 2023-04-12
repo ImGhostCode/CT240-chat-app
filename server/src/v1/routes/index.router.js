@@ -1,11 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require('express');
+const userRouter = require('./user.route')
+const messageRouter = require('./message.route')
+const conversationRouter = require('./conversation.route')
+const router = Router();
 
-router.get('/checkstatus', (req, res, next) => {
-    res.status(200).json({
-        status: 'success',
-        message: 'api ok'
-    })
-})
+router.use('/users', userRouter)
+router.use('/conversations', conversationRouter)
+router.use('/messages', messageRouter)
+
 
 module.exports = router;

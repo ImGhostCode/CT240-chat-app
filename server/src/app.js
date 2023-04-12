@@ -4,6 +4,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const compression = require('compression')
 const ApiError = require("./v1/utils/apiError");
+const cookieParser = require('cookie-parser')
 
 //user middleware
 app.use(helmet())
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
+app.use(cookieParser())
 
 //router
 app.use('/api/v1', require('./v1/routes/index.router'))

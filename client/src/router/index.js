@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from "./../stores/auth.store.js";
 
 
 const router = createRouter({
@@ -7,7 +8,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore()
+        authStore.getUserStored()
+        if (!authStore.user) next({ name: 'login' })
+        next()
+      }
     },
     {
       path: '/register',

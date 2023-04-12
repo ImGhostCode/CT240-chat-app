@@ -1,6 +1,10 @@
 <script setup>
 import Conversation from '../components/Conversation.vue';
 import SideBar from '../components/SideBar.vue';
+import { useAuthStore } from "./../stores/auth.store.js";
+
+const authStore = useAuthStore()
+
 </script>
 
 <template>

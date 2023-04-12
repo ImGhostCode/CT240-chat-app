@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import 'vue-toast-notification/dist/theme-sugar.css';
+
 
 import App from './App.vue'
 import router from './router'
@@ -13,3 +15,10 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+
+// Force dismiss specific toast
+// instance.dismiss();
+
+// Dismiss all opened toast immediately
+// $toast.clear();
