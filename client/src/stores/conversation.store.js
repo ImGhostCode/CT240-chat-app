@@ -8,13 +8,12 @@ export const useConversationStore = defineStore("conversation", () => {
     const err = ref(null);
     const activeIndex = ref(null)
 
-    async function fetchAllConversations(token) {
+    async function fetchAllConversations() {
         isLoading.value = true;
         // conversations.value = null;
         err.value = null;
         try {
-            const res = await conversationService.fetchAllConversations(token);
-            console.log(res);
+            const res = await conversationService.fetchAllConversations();
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             conversations.value = res.data;
         } catch (error) {

@@ -47,8 +47,9 @@ const isTyping = ref(false)
 onMounted(async () => {
 
   socket = io(ENDPOINT);
-  socket.on("message recieved", newMessageRecieved => {
+  socket.on("message recieved", async (newMessageRecieved) => {
     messageStore.messages.push(newMessageRecieved)
+    await conversationStore.fetchAllConversations()
   });
   watchEffect(async () => {
     socket.emit("setup", authStore.user);

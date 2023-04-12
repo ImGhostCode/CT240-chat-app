@@ -5,13 +5,9 @@ class ConversationService {
         this.api = createApiClient(baseURL);
     }
 
-    async fetchAllConversations(token) {
+    async fetchAllConversations() {
         return await (
-            await this.api.get("/", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            await this.api.get("/")
         ).data;
     }
     async accessAConversation(userId) {

@@ -5,23 +5,15 @@ class MessageService {
         this.api = createApiClient(baseURL);
     }
 
-    async fetchMessages(conversationId, token) {
+    async fetchMessages(conversationId) {
         return await (
-            await this.api.get(`/${conversationId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            await this.api.get(`/${conversationId}`)
         ).data;
     }
 
-    async sendMessage(content, conversationId, token) {
+    async sendMessage(content, conversationId) {
         return await (
-            await this.api.post('/send-message', { content, conversationId }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            await this.api.post('/send-message', { content, conversationId })
         ).data;
     }
 

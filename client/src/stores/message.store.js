@@ -27,7 +27,7 @@ export const useMessageStore = defineStore("message", () => {
         isLoading.value = true;
         err.value = null;
         try {
-            const res = await messageService.sendMessage(content, conversationId, token);
+            const res = await messageService.sendMessage(content, conversationId);
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             newMessage.value = res.data
             messages.value.push(res.data)
