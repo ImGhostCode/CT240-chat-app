@@ -15,7 +15,6 @@ export const useAuthStore = defineStore("auth", () => {
         err.value = null;
         try {
             const res = await authService.register({ name, email, password });
-            console.log(res);
             if (res.code === 400) throw new Error(res.message);
             result.value = res;
         } catch (error) {
@@ -69,7 +68,24 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    async function logout() {
+        isLoading.value = true;
+        result.value = null;
+        err.value = null;
+        try {
+            const res = await authService.logout();
+            if (res.code === 401 || res.code === 400) throw new Error(res.message);
+            localStorage.removeItem("userInfo");
+            result.value = res
+            // user.value = null
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
 
 
-    return { register, result, isLoading, err, login, user, getUserStored, search, searchResult };
+
+    return { register, result, isLoading, err, login, user, getUserStored, search, searchResult, logout };
 });

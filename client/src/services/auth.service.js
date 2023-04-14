@@ -20,6 +20,11 @@ class AuthService {
       await this.api.get(`/?search=${keyword}`)
     ).data;
   }
+  async logout() {
+    return await (
+      await this.api.post("/logout")
+    ).data;
+  }
 }
 
 export default new AuthService();
