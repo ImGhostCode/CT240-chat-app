@@ -10,6 +10,7 @@ import { useAuthStore } from "./../stores/auth.store.js";
 import { useMessageStore } from './../stores/message.store'
 import io from "socket.io-client";
 import { useToast } from 'vue-toast-notification';
+import { getSender } from '../utils/ChatLogics';
 const $toast = useToast();
 const ENDPOINT = "http://localhost:3051";
 const messageStore = useMessageStore()
@@ -73,7 +74,9 @@ onMounted(async () => {
 <template>
   <div class="basis-2/3 flex flex-col" v-if="conversationStore.activeIndex !== null">
     <div class="h-[50px] bg-indigo-800 text-white w-full flex justify-between items-center px-3 py-8">
-      <h2 class="text-2xl">{{ conversationStore.conversations[conversationStore.activeIndex].conversationName }}</h2>
+      <h2 class="text-2xl">{{ !conversationStore.conversations[conversationStore.activeIndex].isGroupChat
+        ? getSender(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)
+        : conversation.conversationName }}</h2>
       <div class="flex relative">
         <span class="mx-2 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

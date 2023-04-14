@@ -13,7 +13,7 @@
           : conversation.conversationName }} </h2>
         <p v-if="conversation.latestMessage"> {{ conversation.latestMessage.sender._id === authStore.user._id ? 'You' :
           conversation.latestMessage.sender.name }}: {{
-    conversation.latestMessage.content.lenght > 50 ? conversation.latestMessage.content.substring(0, 51) + '...' :
+    conversation.latestMessage.content.length > 20 ? conversation.latestMessage.content.substring(0, 10) + '...' :
     conversation.latestMessage.content }}</p>
       </div>
     </div>

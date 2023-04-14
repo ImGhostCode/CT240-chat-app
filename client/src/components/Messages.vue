@@ -33,10 +33,10 @@ function scrollToBottom() {
 </script>
 
 <template>
-   <div ref="scroll_bottom" class="bg-slate-200 basis-full overflow-y-scroll " v-if="messageStore.messages">
-   <div class="" v-for="message in messageStore.messages" :key="message._id">
-      <Message :info="message" />
-   </div>
+   <div ref="scroll_bottom" class="bg-slate-200 basis-full overflow-y-scroll w-full" v-if="messageStore.messages">
+
+   <Message v-for="message in messageStore.messages" :key="message._id" :info="message" />
+
    <!-- <div class="my-3 flex items-center p-3">
          <div class="h-10 w-10 rounded-full overflow-hidden">
             <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
@@ -185,40 +185,40 @@ function scrollToBottom() {
                   </div>
 
                      <div class="mx-4 message_left text-black flex flex-col rounded-lg py-2 px-3">hi jonh heloooooooooooo
-                              <span class="text-xs ">20:30</span>
-                                 </div>
-                                 </div>
-                                                <div class="my-3 flex items-center flex-row-reverse p-3">
-                                                                     <div class="h-10 w-10 rounded-full overflow-hidden">
-                                                                        <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
-                                                                           class="h-full w-full">
-                                                                     </div>
+                                          <span class="text-xs ">20:30</span>
+                                             </div>
+                                             </div>
+                                                            <div class="my-3 flex items-center flex-row-reverse p-3">
+                                                                                 <div class="h-10 w-10 rounded-full overflow-hidden">
+                                                                                    <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
+                                                                                       class="h-full w-full">
+                                                                                 </div>
 
-                                                                              <div class="mx-4 message_right text-black flex flex-col rounded-lg py-2 px-3">hi jonh testtttt
-                                                                                          <span class="text-xs">20:30</span>
-                                                                                             </div>
-                                                                                             </div>
+                                                                                          <div class="mx-4 message_right text-black flex flex-col rounded-lg py-2 px-3">hi jonh testtttt
+                                                                                                      <span class="text-xs">20:30</span>
+                                                                                                         </div>
+                                                                                                         </div>
 
-                                                                                                <div class="my-3 flex items-center p-3">
-                                                                                                   <div class="h-10 w-10 rounded-full overflow-hidden">
-                                                                                                      <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
-                                                                                                                                                   class="h-full w-full">
-                                                                                                                                                      </div>
-
-                                                                                                                                                         <div class="mx-4 message_left text-black flex flex-col rounded-lg py-2 px-3">hi jonh heloooooooooooo
-                                                                                                                                                            <span class="text-xs ">20:30</span>
-                                                                                                                                                         </div>
-                                                                                                                                                      </div>
-                                                                                                                                                      <div class="my-3 flex items-center flex-row-reverse p-3">
-                                                                                                                                                         <div class="h-10 w-10 rounded-full overflow-hidden">
-                                                                                                                                                            <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
+                                                                                                            <div class="my-3 flex items-center p-3">
+                                                                                                               <div class="h-10 w-10 rounded-full overflow-hidden">
+                                                                                                                  <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
                                                                                                                                                                class="h-full w-full">
-                                                                                                                                                         </div>
+                                                                                                                                                                  </div>
 
-                                                                                                                                                         <div class="mx-4 message_right text-black flex flex-col rounded-lg py-2 px-3">hi jonh testtttt
-                                                                                                                                                            <span class="text-xs">20:30</span>
-                                                                                                                                                         </div>
-                                                                                                                                                      </div> -->
+                                                                                                                                                                     <div class="mx-4 message_left text-black flex flex-col rounded-lg py-2 px-3">hi jonh heloooooooooooo
+                                                                                                                                                                        <span class="text-xs ">20:30</span>
+                                                                                                                                                                     </div>
+                                                                                                                                                                  </div>
+                                                                                                                                                                  <div class="my-3 flex items-center flex-row-reverse p-3">
+                                                                                                                                                                     <div class="h-10 w-10 rounded-full overflow-hidden">
+                                                                                                                                                                        <img src="https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg" alt="avatar"
+                                                                                                                                                                           class="h-full w-full">
+                                                                                                                                                                     </div>
+
+                                                                                                                                                                     <div class="mx-4 message_right text-black flex flex-col rounded-lg py-2 px-3">hi jonh testtttt
+                                                                                                                                                                        <span class="text-xs">20:30</span>
+                                                                                                                                                                     </div>
+                                                                                                                                                                  </div> -->
    </div>
    <div class="" v-else-if="messageStore.err">{{ messageStore.err }}</div>
    <div class="" v-else-if="messageStore.isLoading">Loading...</div>
