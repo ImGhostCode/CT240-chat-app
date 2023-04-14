@@ -76,7 +76,7 @@ onMounted(async () => {
     <div class="h-[50px] bg-indigo-800 text-white w-full flex justify-between items-center px-3 py-8">
       <h2 class="text-2xl">{{ !conversationStore.conversations[conversationStore.activeIndex].isGroupChat
         ? getSender(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)
-        : conversation.conversationName }}</h2>
+        : conversationStore.conversations[conversationStore.activeIndex].conversationName }}</h2>
       <div class="flex relative">
         <span class="mx-2 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

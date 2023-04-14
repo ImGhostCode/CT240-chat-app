@@ -58,10 +58,11 @@ class ConversationService {
         return new ApiResponse(200, 'success', 'All Conversation', results)
     }
 
-    async createGroup({ name, users, reqUser, }) {
+    async createGroup({ name, members, reqUser }) {
+
         const groupChat = await _Conversation.create({
             conversationName: name,
-            users,
+            users: [...members],
             isGroupChat: true,
             groupAdmin: reqUser,
         });

@@ -16,6 +16,12 @@ class ConversationService {
         ).data;
     }
 
+    async createGroup(name, users) {
+        return await (
+            await this.api.post("/create-group", { name, users })
+        ).data;
+    }
+
 }
 
 export default new ConversationService();

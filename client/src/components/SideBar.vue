@@ -30,7 +30,7 @@ async function handleSearch(value) {
 
     timeout = setTimeout(async () => {
         if (value) {
-            await authStore.search(value)
+            await authStore.search(value, false)
         } else {
             authStore.searchResult = null
         }
