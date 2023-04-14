@@ -8,6 +8,8 @@ export const useAuthStore = defineStore("auth", () => {
     const err = ref(null);
     const user = ref(null)
     const searchResult = ref(null)
+    const searchMembersResult = ref(null)
+
 
     async function register({ name, email, password }) {
         isLoading.value = true;
@@ -54,13 +56,16 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
-    async function search(keyword) {
+    async function search(keyword, isCreateGroup) {
         isLoading.value = true;
         result.value = null;
         err.value = null;
         try {
             const res = await authService.searchUsers(keyword)
-            searchResult.value = res.data
+            if (isCreateGroup) {
+                searchMembersResult.value = res.data
+            } else
+                searchResult.value = res.data
         } catch (error) {
             err.value = error.message;
         } finally {
@@ -87,5 +92,5 @@ export const useAuthStore = defineStore("auth", () => {
 
 
 
-    return { register, result, isLoading, err, login, user, getUserStored, search, searchResult, logout };
+    return { register, result, isLoading, err, login, user, getUserStored, search, searchResult, logout, searchMembersResult };
 });

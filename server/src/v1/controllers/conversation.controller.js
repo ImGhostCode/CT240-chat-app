@@ -36,7 +36,7 @@ module.exports = {
     },
 
     //@description     Create New Group Chat
-    //@route           POST /api/conversations/creare-group
+    //@route           POST /api/conversations/create-group
     //@access          Protected
 
     createGroupChat: async (req, res, next) => {
@@ -48,17 +48,15 @@ module.exports = {
             }
 
             const { _id: reqUser } = req.user
-            console.log(members);
-            let users = members
 
-            if (users.length < 2) {
+            if (members.length < 2) {
                 throw new ApiError(400, 'falied', "More than 2 users are required to form a group chat", null);
             }
 
-            users.push(req.user);
+            members.push(req.user);
 
             const conversationService = new ConversationService()
-            const resutl = await conversationService.createGroup({ name, users, reqUser })
+            const resutl = await conversationService.createGroup({ name, members, reqUser })
             return res.json(resutl)
         } catch (error) {
             return res.json({ ...error, message: error.message })
