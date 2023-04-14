@@ -11,12 +11,12 @@
         </h3>
 
 
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center items-center" v-if="authStore.user">
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer">
                 <img :src="authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
             <div class="text-lg mr-3">{{ authStore.user.name }}</div>
-            <button class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
+            <button @click="LogoutHandle" class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
         </div>
     </div>
     <Profile v-if="isShowEditProfile" @toggleEditProfile="toggleEditProfile" />
@@ -26,11 +26,30 @@
 import { ref } from 'vue';
 import Profile from './Profile.vue';
 import { useAuthStore } from '../stores/auth.store';
+import { useToast } from 'vue-toast-notification';
+import { useRouter } from "vue-router";
+
 
 const isShowEditProfile = ref(false)
 const authStore = useAuthStore()
+const $toast = useToast();
+const router = useRouter()
+
+
 
 function toggleEditProfile() {
     isShowEditProfile.value = !isShowEditProfile.value
 }
+
+
+const LogoutHandle = async () => {
+    await authStore.logout()
+    if (authStore.err) {
+        $toast.error(authStore.err);
+        return
+    }
+    $toast.success(authStore.result.message);
+    router.push({ name: 'login' })
+}
+
 </script>

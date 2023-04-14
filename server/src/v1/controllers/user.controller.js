@@ -1,5 +1,6 @@
 const UserService = require("../services/user.service")
 const ApiError = require("../utils/apiError")
+const ApiRes = require('../utils/apiResponse')
 
 module.exports = {
 
@@ -62,5 +63,18 @@ module.exports = {
             return res.json({ ...error, message: error.message })
         }
 
+    },
+
+
+    //@description     Auth the user
+    //@route           POST /api/v1/users/logout
+    //@access          Protected
+    logoutUser: async (req, res, next) => {
+        try {
+            await res.clearCookie("accessToken")
+            return res.json(new ApiRes(200, 'success', 'Logout successful', null))
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
     }
 }

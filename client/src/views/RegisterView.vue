@@ -6,7 +6,7 @@
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
             <input v-model="email" type="email" placeholder="email"
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
-            <input v-model="password" type="text" placeholder="password"
+            <input v-model="password" type="password" placeholder="password"
                 class="px-2 py-3 border-b-2  outline-none border-slate-400 mb-4">
             <button :disabled="authStore.isLoading" type="submit"
                 class="w-full bg-blue-600 text-white text-md font-semibold rounded-md p-3 mb-2">Sign
@@ -33,7 +33,6 @@ async function handleRegister() {
     if (!name.value || !email.value || !password.value) {
         $toast.warning('Please fill all the fields ');
         return
-
     }
 
     await authStore.register({ name: name.value, email: email.value, password: password.value })
