@@ -7,12 +7,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </span>
-            <h3 class="text-2xl font-bold mb-3">Add Members</h3>
+            <h3 class="text-2xl font-bold mb-3">Remove Members</h3>
             <!-- <input type="text" placeholder="Name" class="p-4 border outline-none w-full mb-3"> -->
-            <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
-                @input="$event => handleSearchUser($event.target.value)">
-            <div class="basis-full overflow-y-scroll max-h-64" v-if="authStore.searchMembersResult">
-                <div v-for="member in authStore.searchMembersResult" :key="member._id"
+            <!-- <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
+                @input="$event => handleSearchUser($event.target.value)"> -->
+            <div class="basis-full overflow-y-scroll max-h-64">
+                <div v-for="member in conversationStore.conversations[conversationStore.activeIndex].users"
+                    :key="member._id"
                     class="px-4 py-2 bg-indigo-700 flex-col text-white mb-2 cursor-pointer rounded-md shadow-md items-center">
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
@@ -23,10 +24,10 @@
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>
                             </div>
                         </div>
-                        <button class="border-none outline-none text-white" @click="handleAddMember(member._id)">
+                        <button class="border-none outline-none text-white" @click="handleRemoveMember(member._id)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                             </svg>
                         </button>
                     </div>
@@ -60,17 +61,14 @@ async function handleSearchUser(value) {
     }, 300);
 }
 
-async function handleAddMember(userId) {
+async function handleRemoveMember(userId) {
     let conversationId = conversationStore.conversations[conversationStore.activeIndex]._id
-    await conversationStore.addMemberGroup(conversationId, userId)
+    console.log(conversationId);
+    await conversationStore.removeMemberGroup(conversationId, userId)
     if (conversationStore.err) {
         $toast.error(conversationStore.err)
         return
     }
     $toast.success(conversationStore.result.message)
 }
-
-onUnmounted(() => {
-    authStore.searchMembersResult = null
-})
 </script>
