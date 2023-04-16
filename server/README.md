@@ -15,7 +15,7 @@
 - [x] POST /create-group
 - [x] PUT /rename-group
 - [x] PUT /add-member
-- [x] DELETE /remove-member
+- [x] PUT /remove-member
 
 ### Messages /api/v1/messages
 
