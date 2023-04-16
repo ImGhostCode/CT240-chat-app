@@ -8,6 +8,6 @@ router.post('/create-group', verifyToken, conversationController.createGroupChat
 router.post('/', verifyToken, conversationController.accessConversation)
 router.put('/rename-group', verifyToken, conversationController.renameGroupChat)
 router.put('/add-member', verifyToken, conversationController.addMembersToGroup)
-router.delete('/remove-member', conversationController.removeMembersFromGroup)
+router.put('/remove-member', conversationController.removeMembersFromGroup)
 
 module.exports = router
