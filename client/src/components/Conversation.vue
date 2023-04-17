@@ -11,17 +11,20 @@ import { useMessageStore } from './../stores/message.store'
 import io from "socket.io-client";
 import { useToast } from 'vue-toast-notification';
 import { getSender } from '../utils/ChatLogics';
+import RemoveMembers from './RemoveMembers.vue';
 const $toast = useToast();
 const ENDPOINT = "http://localhost:3051";
 const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const authStore = useAuthStore()
 
+
 let socket
 const isShow = reactive({
   more: false,
   addMembers: false,
-  editGroup: false
+  editGroup: false,
+  removeMembers: false
 })
 
 function toggleMore() {
@@ -34,6 +37,10 @@ function toggleAddMembers() {
 
 function toggleEditGroup() {
   isShow.editGroup = !isShow.editGroup
+}
+
+function toggleRemoveMembers() {
+  isShow.removeMembers = !isShow.removeMembers
 }
 
 async function sendMessage(content) {
@@ -95,7 +102,9 @@ onMounted(async () => {
         </span>
 
         <ul v-if="isShow.more" class="absolute right-0 top-full bg-white shadow-lg w-40 rounded-sm text-black">
-          <li class="p-3 flex mb-1 cursor-pointer shadow-sm text-red-600"><span class="inline-block cursor-pointer mr-3">
+          <li class="p-3 flex mb-1 cursor-pointer shadow-sm text-red-600"
+            v-if="!conversationStore.conversations[conversationStore.activeIndex].isGroupChat">
+            <span class="inline-block cursor-pointer mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -105,7 +114,6 @@ onMounted(async () => {
             Unfriend
           </li>
           <div class="group" v-if="conversationStore.conversations[conversationStore.activeIndex].isGroupChat">
-
             <li @click="toggleAddMembers" class="p-3 flex mb-1 cursor-pointer shadow-sm"><span
                 class="inline-block cursor-pointer mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -115,6 +123,16 @@ onMounted(async () => {
                 </svg>
               </span>
               Invite
+            </li>
+            <li @click="toggleRemoveMembers" class="p-3 flex mb-1 cursor-pointer shadow-sm text-red-600"><span
+                class="inline-block cursor-pointer mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                </svg>
+              </span>
+              Remove member
             </li>
             <li @click="toggleEditGroup" class="p-3 flex mb-1 cursor-pointer shadow-sm">
               <span class="inline-block cursor-pointer mr-3">
@@ -156,4 +174,5 @@ onMounted(async () => {
 
   <AddMembers v-if="isShow.addMembers" @show="toggleAddMembers" />
   <EditGroup v-if="isShow.editGroup" @show="toggleEditGroup" />
+  <RemoveMembers v-if="isShow.removeMembers" @show="toggleRemoveMembers" />
 </template>

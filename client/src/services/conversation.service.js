@@ -22,6 +22,18 @@ class ConversationService {
         ).data;
     }
 
+    async addMemberGroup(conversationId, userId) {
+        return await (
+            await this.api.put("/add-member", { conversationId, userId })
+        ).data
+    }
+
+    async removeMemberGroup(conversationId, userId) {
+        return await (
+            await this.api.put("/remove-member", { conversationId, userId })
+        ).data
+    }
+
 }
 
 export default new ConversationService();
