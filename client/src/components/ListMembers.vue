@@ -7,7 +7,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </span>
-            <h3 class="text-2xl font-bold mb-3">Remove Members</h3>
+            <h3 class="text-2xl font-bold mb-3">List Members</h3>
             <!-- <input type="text" placeholder="Name" class="p-4 border outline-none w-full mb-3"> -->
             <!-- <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
                 @input="$event => handleSearchUser($event.target.value)"> -->
