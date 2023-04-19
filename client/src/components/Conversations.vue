@@ -5,6 +5,7 @@
       :class="(index === conversationStore.activeIndex) ? 'bg-indigo-800' : 'bg-indigo-600'"
       @click="conversationStore.activeIndex = index">
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden border-2">
+
         <img
           :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : getSenderFull(authStore.user, conversation.users).pic"
           alt="avatar" class="h-full w-full">
@@ -38,8 +39,7 @@ const authStore = useAuthStore()
 
 onMounted(async () => {
 
-  await conversationStore.fetchAllConversations(authStore.user.token)
-
+  await conversationStore.fetchAllConversations()
 
 })
 </script>

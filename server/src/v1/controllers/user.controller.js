@@ -19,8 +19,8 @@ module.exports = {
                     ],
                 }
                 : {};
-            const resutl = await userService.getAllUsers({ keyword, user: req.user })
-            return res.json(resutl)
+            const result = await userService.getAllUsers({ keyword, user: req.user })
+            return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
@@ -39,8 +39,8 @@ module.exports = {
             if (!name || !email || !password) {
                 throw new ApiError(400, 'failed', "Please Enter all the Feilds", null);
             }
-            const resutl = await userService.register({ name, email, password, pic })
-            return res.json(resutl)
+            const result = await userService.register({ name, email, password, pic })
+            return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
@@ -59,9 +59,9 @@ module.exports = {
             if (!email || !password) {
                 throw new ApiError(400, 'failed', "Please Enter all the Feilds", null);
             }
-            const resutl = await userService.login({ email, password })
-            res.cookie('accessToken', resutl.data.token, { httpOnly: true, secure: false, path: '/', sameSite: 'strict' })
-            return res.json(resutl)
+            const result = await userService.login({ email, password })
+            res.cookie('accessToken', result.data.token, { httpOnly: true, secure: false, path: '/', sameSite: 'strict' })
+            return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
@@ -79,5 +79,21 @@ module.exports = {
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
-    }
+    },
+
+    //@description     Delete the user
+    //@route           DELETE /api/v1/users/:userId
+    //@access          Protected
+    deleteUser: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const { userId } = req.params
+            const result = await userService.deleteUser({ userId })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+
 }

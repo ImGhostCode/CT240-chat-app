@@ -22,6 +22,7 @@ export const useConversationStore = defineStore("conversation", () => {
             err.value = error.message;
         } finally {
             isLoading.value = false;
+
         }
     }
     async function accessConversation(userId) {
@@ -32,7 +33,7 @@ export const useConversationStore = defineStore("conversation", () => {
             console.log(res);
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             const isExist = conversations.value.findIndex(tes => tes._id === res.data._id)
-            console.log(isExist);
+
             if (isExist === -1) {
                 conversations.value.push(res.data)
                 activeIndex.value = conversations.value.length - 1

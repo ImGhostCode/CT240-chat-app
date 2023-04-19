@@ -7,7 +7,7 @@
       </svg>
     </button>
 
-    <button v-if="true" @click="toggleManageAccounts">
+    <button v-if="authStore.user.isAdmin" @click="toggleManageAccounts">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -21,10 +21,12 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { useAuthStore } from '../stores/auth.store'
+import { onMounted, reactive, ref } from 'vue';
 import NewGroup from './NewGroup.vue'
 import ManageAccounts from './ManageAccounts.vue'
 
+const authStore = useAuthStore()
 const isShow = reactive({
   newGroup: false,
   manageAccounts: false
@@ -36,4 +38,5 @@ function toggleNewGroup() {
 function toggleManageAccounts() {
   isShow.manageAccounts = !isShow.manageAccounts
 }
+
 </script>

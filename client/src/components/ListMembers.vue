@@ -24,7 +24,9 @@
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>
                             </div>
                         </div>
-                        <button class="border-none outline-none text-white" @click="handleRemoveMember(member._id)">
+                        <button
+                            v-if="member._id !== conversationStore.conversations[conversationStore.activeIndex].groupAdmin._id"
+                            class="border-none outline-none text-white" @click="handleRemoveMember(member._id)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
@@ -42,6 +44,8 @@
 import { useConversationStore } from "../stores/conversation.store";
 import { useToast } from 'vue-toast-notification';
 import { computed, watchEffect, watch } from "vue";
+import { useAuthStore } from "./../stores/auth.store.js";
+const authStore = useAuthStore()
 
 
 const $toast = useToast();
@@ -59,6 +63,8 @@ async function handleRemoveMember(userId) {
         $toast.error(conversationStore.err)
         return
     }
+    await conversationStore.fetchAllConversations()
     $toast.success(conversationStore.result.message)
+
 }
 </script>

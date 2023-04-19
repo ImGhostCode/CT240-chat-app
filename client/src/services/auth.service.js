@@ -25,6 +25,11 @@ class AuthService {
       await this.api.post("/logout")
     ).data;
   }
+  async deleteAccount(userId) {
+    return await (
+      await this.api.delete(`/${userId}`)
+    ).data;
+  }
 }
 
 export default new AuthService();

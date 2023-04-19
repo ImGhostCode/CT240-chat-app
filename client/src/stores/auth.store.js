@@ -7,8 +7,9 @@ export const useAuthStore = defineStore("auth", () => {
     const isLoading = ref(false);
     const err = ref(null);
     const user = ref(null)
-    const searchResult = ref(null)
+    const searchUserResult = ref(null)
     const searchMembersResult = ref(null)
+    const searchAccountResult = ref(null)
 
 
     async function register({ name, email, password }) {
@@ -56,16 +57,23 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
-    async function search(keyword, isCreateGroup) {
+    async function search(keyword, searchType) {
         isLoading.value = true;
         result.value = null;
         err.value = null;
         try {
             const res = await authService.searchUsers(keyword)
-            if (isCreateGroup) {
-                searchMembersResult.value = res.data
-            } else
-                searchResult.value = res.data
+            switch (searchType) {
+                case 'Group':
+                    searchMembersResult.value = res.data
+                    break;
+                case 'Account':
+                    searchAccountResult.value = res.data
+                    break;
+                default:
+                    searchUserResult.value = res.data
+                    break;
+            }
         } catch (error) {
             err.value = error.message;
         } finally {
@@ -89,8 +97,22 @@ export const useAuthStore = defineStore("auth", () => {
             isLoading.value = false;
         }
     }
+    async function deleteAccount(userId) {
+        isLoading.value = true;
+        result.value = null;
+        err.value = null;
+        try {
+            const res = await authService.deleteAccount(userId)
+            if (res.code === 401 || res.code === 400) throw new Error(res.message);
+            result.value = res
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
 
 
 
-    return { register, result, isLoading, err, login, user, getUserStored, search, searchResult, logout, searchMembersResult };
+    return { register, result, isLoading, err, login, user, getUserStored, search, searchUserResult, logout, searchMembersResult, searchAccountResult, deleteAccount };
 });

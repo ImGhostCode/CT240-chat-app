@@ -116,7 +116,7 @@ async function handleSearchUser(value) {
 
     timeout = setTimeout(async () => {
         if (value) {
-            await authStore.search(value, true)
+            await authStore.search(value, 'Group')
         } else {
             authStore.searchMembersResult = null
         }

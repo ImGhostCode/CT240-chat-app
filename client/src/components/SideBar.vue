@@ -3,7 +3,7 @@
         <NavBar />
         <Search :handleSearch="handleSearch" />
 
-        <SearchResult v-if="authStore.searchResult" :users="authStore.searchResult" @handleClick="handleClick" />
+        <SearchResult v-if="authStore.searchUserResult" :users="authStore.searchUserResult" @handleClick="handleClick" />
         <Conversations v-else />
 
 
@@ -30,16 +30,16 @@ async function handleSearch(value) {
 
     timeout = setTimeout(async () => {
         if (value) {
-            await authStore.search(value, false)
+            await authStore.search(value, '')
         } else {
-            authStore.searchResult = null
+            authStore.searchUserResult = null
         }
     }, 300);
 
 }
 
 async function handleClick(userId) {
-    authStore.searchResult = null
+    authStore.searchUserResult = null
     await conversationStore.accessConversation(userId)
 
 
