@@ -8,6 +8,7 @@ export const useConversationStore = defineStore("conversation", () => {
     const err = ref(null);
     const activeIndex = ref(null)
     const result = ref(null)
+    const currConversation = ref(null)
 
     async function fetchAllConversations() {
         isLoading.value = true;
@@ -35,9 +36,11 @@ export const useConversationStore = defineStore("conversation", () => {
             if (isExist === -1) {
                 conversations.value.push(res.data)
                 activeIndex.value = conversations.value.length - 1
+
             } else {
                 activeIndex.value = isExist
             }
+
         } catch (error) {
             err.value = error.message;
         } finally {
@@ -67,6 +70,7 @@ export const useConversationStore = defineStore("conversation", () => {
             const res = await conversationService.addMemberGroup(conversationId, userId)
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             result.value = res
+            conversations[activeIndex] = res.data
         } catch (error) {
             err.value = error.message;
         } finally {
@@ -89,5 +93,22 @@ export const useConversationStore = defineStore("conversation", () => {
         }
     }
 
-    return { fetchAllConversations, conversations, isLoading, err, activeIndex, accessConversation, createAGroup, addMemberGroup, result, removeMemberGroup };
+
+    async function editGroup(image) {
+        isLoading.value = true;
+        err.value = null;
+        result.value = null;
+        try {
+            const res = await conversationService.editGroup(image)
+            console.log(res);
+            if (res.code === 400 || res.code === 401 || res.code === 403 || res.code === 404) throw new Error(res.message);
+            result.value = res
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    return { currConversation, fetchAllConversations, conversations, isLoading, err, activeIndex, accessConversation, createAGroup, addMemberGroup, result, removeMemberGroup, editGroup };
 });

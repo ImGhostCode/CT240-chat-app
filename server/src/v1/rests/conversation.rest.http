@@ -2,7 +2,7 @@
 
 ### fetch all conversations 
 GET {{urlDev}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZDU4NzNlOTU1NTIyNTYyN2RhNiIsImlhdCI6MTY4MDk2MzU2OCwiZXhwIjoxNjgxMDQ5OTY4fQ.iyFFNAyFaYGTWbd73ZFDp0Bs7OcHgZhw3rA2MdWSYjk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2Y1M2VmZmUzYmU5YzgzZjZjMDYzNiIsImlhdCI6MTY4MTg3MTg5MSwiZXhwIjoxNjgxOTU4MjkxfQ.q6ZGS7S2t7SpkzTuLeskfKgGnSvR1kVpESuC_cqWZEc
 
 ### Access a conversation
 POST {{urlDev}}/

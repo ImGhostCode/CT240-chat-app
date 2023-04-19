@@ -64,13 +64,20 @@ module.exports = {
     },
 
     // @desc    Rename Group
-    // @route   PUT /api/conversations/rename-group
+    // @route   PUT /api/conversations/edit-group
     // @access  Protected
-    renameGroupChat: async (req, res, next) => {
+    editGroupChat: async (req, res, next) => {
         try {
-            const { conversationId, newConversationName } = req.body;
+            let { conversationId, newConversationName } = req.body;
+            conversationId = JSON.parse(conversationId)
+            newConversationName = JSON.parse(newConversationName)
+            if (!conversationId) throw new ApiError(400, 'falied', "Please Fill all the fields", null);
+            const newInfo = { conversationName: newConversationName, imgGroup: req.file?.filename || undefined }
+            Object.keys(newInfo).forEach(
+                (key) => newInfo[key] === undefined && delete newInfo[key]
+            );
             const conversationService = new ConversationService()
-            const resutl = await conversationService.renameGroup({ conversationId, newConversationName })
+            const resutl = await conversationService.editGroup({ conversationId, newInfo })
             return res.json(resutl)
         } catch (error) {
             return res.json({ ...error, message: error.message })

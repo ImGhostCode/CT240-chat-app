@@ -22,6 +22,6 @@ POST  {{urlDev}}/login
 Content-Type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "test@gmail.com",
     "password": "123456"
 }

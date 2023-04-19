@@ -34,6 +34,17 @@ class ConversationService {
         ).data
     }
 
+    async editGroup(image) {
+        return await (
+            await this.api.put("/edit-group", image, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        ).data
+    }
+
+
 }
 
 export default new ConversationService();
