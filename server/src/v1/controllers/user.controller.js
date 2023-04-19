@@ -1,3 +1,4 @@
+const EmailAuthentication = require("../services/EmailAuthentication")
 const UserService = require("../services/user.service")
 const ApiError = require("../utils/apiError")
 const ApiRes = require('../utils/apiResponse')
@@ -31,7 +32,8 @@ module.exports = {
     //@access          Public
     registerUser: async (req, res, next) => {
         try {
-            const userService = new UserService()
+            const emailAuthentication = new EmailAuthentication();
+            const userService = new UserService(emailAuthentication);
             const { name, email, password, pic } = req.body;
             console.log(name, email, password);
             if (!name || !email || !password) {
@@ -51,7 +53,8 @@ module.exports = {
     //@access          Public
     loginUser: async (req, res, next) => {
         try {
-            const userService = new UserService()
+            const emailAuthentication = new EmailAuthentication();
+            const userService = new UserService(emailAuthentication);
             const { email, password } = req.body;
             if (!email || !password) {
                 throw new ApiError(400, 'failed', "Please Enter all the Feilds", null);
