@@ -11,5 +11,6 @@ router.post('/', verifyToken, conversationController.accessConversation)
 router.put('/edit-group', verifyToken, upload.single('image'), conversationController.editGroupChat)
 router.put('/add-member', verifyToken, conversationController.addMembersToGroup)
 router.put('/remove-member', conversationController.removeMembersFromGroup)
+router.delete('/delete-group/:conversationId', verifyToken, conversationController.deleteGroup)
 
 module.exports = router

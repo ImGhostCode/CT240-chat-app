@@ -12,7 +12,7 @@
 
 
         <div class="flex justify-center items-center" v-if="authStore.user">
-            <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer">
+            <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer border">
                 <img :src="authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
             <div class="text-lg mr-3">{{ authStore.user.name }}</div>

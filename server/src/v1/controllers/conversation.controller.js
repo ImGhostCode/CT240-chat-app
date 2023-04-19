@@ -38,7 +38,6 @@ module.exports = {
     //@description     Create New Group Chat
     //@route           POST /api/conversations/create-group
     //@access          Protected
-
     createGroupChat: async (req, res, next) => {
         try {
 
@@ -63,7 +62,7 @@ module.exports = {
         }
     },
 
-    // @desc    Rename Group
+    // @desc    edit Group
     // @route   PUT /api/conversations/edit-group
     // @access  Protected
     editGroupChat: async (req, res, next) => {
@@ -83,7 +82,6 @@ module.exports = {
             return res.json({ ...error, message: error.message })
         }
     },
-
 
     // @desc    Remove user from Group
     // @route   PUT /api/conversations/remove-members
@@ -112,6 +110,21 @@ module.exports = {
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
-    }
+    },
 
+    // @desc    Delete Group / Leave
+    // @route   DELETE /api/conversations/delete-group/:conversationId
+    // @access  Protected
+    deleteGroup: async (req, res, next) => {
+        try {
+            const { conversationId } = req.params;
+            const { _id: userId } = req.user
+            console.log(conversationId, userId);
+            const conversationService = new ConversationService()
+            const resutl = await conversationService.deleteGroup({ conversationId, userId })
+            return res.json(resutl)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    }
 }

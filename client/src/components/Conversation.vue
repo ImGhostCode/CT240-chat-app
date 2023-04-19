@@ -50,6 +50,18 @@ async function sendMessage(content) {
 
 }
 
+async function handleDeleteGroup() {
+  await conversationStore.deleteGroup(conversationStore.conversations[conversationStore.activeIndex]._id)
+  if (conversationStore.err) {
+    $toast.error(conversationStore.err)
+    return
+  }
+  $toast.success(conversationStore.result.message)
+  // conversationStore.conversations.filter(con => con._id !== conversationStore.conversations[conversationStore.activeIndex]._id)
+  await conversationStore.fetchAllConversations()
+
+}
+
 const socketConnected = ref(false)
 const isTyping = ref(false)
 
@@ -146,7 +158,9 @@ onMounted(async () => {
               </span>
               Edit group
             </li>
-            <li class="p-3 flex mb-1 cursor-pointer shadow-sm text-red-600">
+            <li
+              v-if="authStore.user._id === conversationStore.conversations[conversationStore.activeIndex].groupAdmin._id"
+              @click="handleDeleteGroup" class="p-3 flex mb-1 cursor-pointer shadow-sm text-red-600">
               <span class="inline-block cursor-pointer mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-6 h-6">

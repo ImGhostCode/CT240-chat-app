@@ -55,3 +55,13 @@ Content-Type: application/json
     "conversationId": "6431832890bfe6ca5d7a38d0",
     "userId": "64301f48ac86fc9a842017e4" 
 }
+
+###
+DELETE  {{urlDev}}/delete-group
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzhmNTBkOGM4NGExNjgyZjY1ZjZhYiIsImlhdCI6MTY4MTkwNDIyNiwiZXhwIjoxNjgxOTkwNjI2fQ.T4xD3oUTj0D--Tcee2KxizswktSOuckej6AsDJR6gnM
+Content-Type: application/json
+
+{
+    "conversationId": "643fd1aabeec87014da65d3e"
+}
+

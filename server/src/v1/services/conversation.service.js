@@ -76,8 +76,6 @@ class ConversationService {
 
     async editGroup({ conversationId, newInfo }) {
 
-
-        console.log(conversationId, newInfo);
         const updatedChat = await _Conversation.findByIdAndUpdate(
             conversationId,
             {
@@ -144,6 +142,22 @@ class ConversationService {
 
         }
 
+    }
+
+    async deleteGroup({ conversationId, userId }) {
+        const deleted = await _Conversation.findOneAndDelete(
+            {
+                _id: conversationId,
+                groupAdmin: userId
+
+            }
+        )
+
+        if (!deleted) {
+            throw new ApiError(404, 'failed', 'Group Chat Not Found', null)
+        } else {
+            return new ApiResponse(200, 'success', 'Deleted group', deleted)
+        }
     }
 }
 

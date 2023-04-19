@@ -100,7 +100,6 @@ export const useConversationStore = defineStore("conversation", () => {
         result.value = null;
         try {
             const res = await conversationService.editGroup(image)
-            console.log(res);
             if (res.code === 400 || res.code === 401 || res.code === 403 || res.code === 404) throw new Error(res.message);
             result.value = res
         } catch (error) {
@@ -110,5 +109,25 @@ export const useConversationStore = defineStore("conversation", () => {
         }
     }
 
-    return { currConversation, fetchAllConversations, conversations, isLoading, err, activeIndex, accessConversation, createAGroup, addMemberGroup, result, removeMemberGroup, editGroup };
+    async function deleteGroup(conversationId) {
+        isLoading.value = true;
+        err.value = null;
+        result.value = null;
+        try {
+            const res = await conversationService.deleteGroup(conversationId)
+            if (res.code === 400 || res.code === 401 || res.code === 403 || res.code === 404) throw new Error(res.message);
+            result.value = res
+            activeIndex.value = null
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    return {
+        deleteGroup, currConversation, fetchAllConversations, conversations,
+        isLoading, err, activeIndex, accessConversation, createAGroup, addMemberGroup, result,
+        removeMemberGroup, editGroup
+    };
 });

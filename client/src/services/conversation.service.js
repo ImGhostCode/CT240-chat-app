@@ -44,6 +44,11 @@ class ConversationService {
         ).data
     }
 
+    async deleteGroup(conversationId) {
+        return await (
+            await this.api.delete(`/delete-group/${conversationId}`)
+        ).data
+    }
 
 }
 
