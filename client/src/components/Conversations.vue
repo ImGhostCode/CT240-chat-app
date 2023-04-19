@@ -5,7 +5,9 @@
       :class="(index === conversationStore.activeIndex) ? 'bg-indigo-800' : 'bg-indigo-600'"
       @click="conversationStore.activeIndex = index">
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
-        <img :src="getSenderFull(authStore.user, conversation.users).pic" alt="avatar" class="h-full w-full">
+        <img
+          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : getSenderFull(authStore.user, conversation.users).pic"
+          alt="avatar" class="h-full w-full">
       </div>
       <div class="flex flex-col ml-2">
         <h2 class="text-xl font-semibold">{{ !conversation.isGroupChat

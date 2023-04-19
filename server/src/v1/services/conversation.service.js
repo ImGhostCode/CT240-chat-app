@@ -74,25 +74,25 @@ class ConversationService {
         return new ApiResponse(200, 'success', 'Created Group Chat', fullGroupChat)
     }
 
-    async renameGroup({ conversationId, newConversationName }) {
+    async editGroup({ conversationId, newInfo }) {
 
+
+        console.log(conversationId, newInfo);
         const updatedChat = await _Conversation.findByIdAndUpdate(
             conversationId,
             {
-                conversationName: newConversationName,
+                ...newInfo
             },
             {
                 new: true,
             }
         )
-            .populate("users", "-password")
-            .populate("groupAdmin", "-password");
 
         if (!updatedChat) {
             throw new ApiError(404, 'failed', "Group Chat Not Found", null)
         }
 
-        return new ApiResponse(200, 'success', 'Name group updated successful', updatedChat)
+        return new ApiResponse(200, 'success', 'Group updated successful', updatedChat)
 
     }
 

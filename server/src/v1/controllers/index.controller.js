@@ -5,5 +5,5 @@ const conversationController = require('./conversation.controller')
 module.exports = {
     userController,
     messageController,
-    conversationController
+    conversationController,
 }

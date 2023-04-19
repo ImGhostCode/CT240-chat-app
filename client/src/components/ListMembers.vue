@@ -38,32 +38,22 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '../stores/auth.store'
+
 import { useConversationStore } from "../stores/conversation.store";
 import { useToast } from 'vue-toast-notification';
-import { onUnmounted } from 'vue'
+import { computed, watchEffect, watch } from "vue";
+
 
 const $toast = useToast();
 const conversationStore = useConversationStore()
-const authStore = useAuthStore()
-let timeout
-async function handleSearchUser(value) {
-    if (timeout) {
-        clearTimeout(timeout);
-    }
+// let renderMembers = conversationStore.conversations[conversationStore.activeIndex].users
 
-    timeout = setTimeout(async () => {
-        if (value) {
-            await authStore.search(value, true)
-        } else {
-            authStore.searchMembersResult = null
-        }
-    }, 300);
-}
+// watchEffect(() => {
+//     renderMembers = conversationStore.conversations[conversationStore.activeIndex].users
+// })
 
 async function handleRemoveMember(userId) {
     let conversationId = conversationStore.conversations[conversationStore.activeIndex]._id
-    console.log(conversationId);
     await conversationStore.removeMemberGroup(conversationId, userId)
     if (conversationStore.err) {
         $toast.error(conversationStore.err)
