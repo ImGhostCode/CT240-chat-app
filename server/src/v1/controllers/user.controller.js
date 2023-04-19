@@ -2,6 +2,7 @@ const EmailAuthentication = require("../services/EmailAuthentication")
 const UserService = require("../services/user.service")
 const ApiError = require("../utils/apiError")
 const ApiRes = require('../utils/apiResponse')
+const bcrypt = require("bcryptjs");
 
 module.exports = {
 
@@ -76,6 +77,35 @@ module.exports = {
         try {
             await res.clearCookie("accessToken")
             return res.json(new ApiRes(200, 'success', 'Logout successful', null))
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    // @desc    edit user
+    // @route   PUT /api/users/:userId
+    // @access  Protected
+    editUser: async (req, res, next) => {
+        try {
+            let { newPassword } = req.body;
+            const { userId } = req.params
+            console.log(newPassword);
+            newPassword = newPassword ? JSON.parse(newPassword) : undefined
+            if (!userId) throw new ApiError(400, 'falied', "Please Fill all the fields", null);
+            const newInfo = { password: newPassword, pic: req.file?.filename || undefined }
+
+
+            Object.keys(newInfo).forEach(
+                (key) => newInfo[key] === undefined && delete newInfo[key]
+            );
+
+            if (newInfo.password) {
+                const salt = await bcrypt.genSalt(10);
+                newInfo.password = await bcrypt.hash(newInfo.password, salt);
+            }
+            const userService = new UserService()
+            const resutl = await userService.editUser({ userId, newInfo })
+            return res.json(resutl)
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }

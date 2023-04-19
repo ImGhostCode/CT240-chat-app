@@ -13,13 +13,13 @@
 
         <div class="flex justify-center items-center" v-if="authStore.user">
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer border">
-                <img :src="authStore.user.pic" alt="avatar" class="h-full w-full">
+                <img :src="'http://localhost:3051/public/images/' + authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
             <div class="text-lg mr-3">{{ authStore.user.name }}</div>
             <button @click="LogoutHandle" class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
         </div>
     </div>
-    <Profile v-if="isShowEditProfile" @toggleEditProfile="toggleEditProfile" />
+    <Profile v-if="isShowEditProfile" @show="toggleEditProfile" />
 </template>
 
 <script setup>

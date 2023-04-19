@@ -30,6 +30,15 @@ class AuthService {
       await this.api.delete(`/${userId}`)
     ).data;
   }
+  async editAccount(userId, image) {
+    return await (
+      await this.api.put(`/${userId}`, image, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    ).data;
+  }
 }
 
 export default new AuthService();
