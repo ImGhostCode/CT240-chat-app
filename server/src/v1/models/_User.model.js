@@ -17,7 +17,12 @@ const userSchema = new Schema(
             required: true,
             default: false,
         },
-        friends: [{ type: Schema.Types.ObjectId, ref: "User" }]
+        friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        isBanned: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
 
     },
     { timestaps: true }

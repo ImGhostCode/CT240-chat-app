@@ -120,7 +120,7 @@ class ConversationService {
             _id: conversationId,
             users: { $in: [userId] }
         }).exec();
-        if (memberExisted) throw new ApiError(400, 'failed', "Memeber is already exist", null)
+        if (memberExisted) throw new ApiError(400, 'failed', "Member is already exist", null)
 
         const added = await _Conversation.findByIdAndUpdate(
             conversationId,
