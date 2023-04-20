@@ -109,6 +109,8 @@ export const useAuthStore = defineStore("auth", () => {
             if (res.code === 400 || res.code === 401 || res.code === 403 || res.code === 404) throw new Error(res.message);
             result.value = res
             user.value = res.data
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+
         } catch (error) {
             err.value = error.message;
         } finally {

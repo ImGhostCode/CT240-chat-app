@@ -14,11 +14,11 @@
             <div class="basis-full overflow-y-scroll max-h-64">
                 <div v-for="member in conversationStore.conversations[conversationStore.activeIndex].users"
                     :key="member._id"
-                    class="px-4 py-2 bg-indigo-700 flex-col text-white mb-2 cursor-pointer rounded-md shadow-md items-center">
+                    class="px-4 py-2 bg-indigo-700 flex-col text-white mb-2  rounded-md shadow-md items-center">
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                <img :src="member.pic" :alt="member.name" class="h-full w-full">
+                                <img :src="'http://localhost:3051/public/images/'+ member.pic" :alt="member.name" class="h-full w-full">
                             </div>
                             <div class="flex flex-col ml-2 items-center justify-center">
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>

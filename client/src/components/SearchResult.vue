@@ -6,7 +6,7 @@
             <div class="flex mb-2">
                 <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
 
-                    <img :src="user.pic" alt="avatar" class="h-full w-full">
+                    <img :src="'http://localhost:3051/public/images/'+ user.pic" alt="avatar" class="h-full w-full">
                 </div>
                 <div class="flex flex-col ml-2 items-center justify-center">
                     <h2 class="text-xl font-semibold">{{ user.name }}</h2>

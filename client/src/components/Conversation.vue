@@ -52,14 +52,18 @@ async function sendMessage(content) {
 }
 
 async function handleDeleteGroup() {
-  await conversationStore.deleteGroup(conversationStore.conversations[conversationStore.activeIndex]._id)
+
+  if(confirm('Are you sure ?')) {
+    await conversationStore.deleteGroup(conversationStore.conversations[conversationStore.activeIndex]._id)
   if (conversationStore.err) {
     $toast.error(conversationStore.err)
     return
   }
   $toast.success(conversationStore.result.message)
   // conversationStore.conversations.filter(con => con._id !== conversationStore.conversations[conversationStore.activeIndex]._id)
-  await conversationStore.fetchAllConversations()
+  await conversationStore.fetchAllConversations() 
+  }
+ 
 
 }
 
