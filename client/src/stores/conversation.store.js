@@ -55,6 +55,7 @@ export const useConversationStore = defineStore("conversation", () => {
         try {
             const res = await conversationService.createGroup(name, users)
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
+            result.value = res
             conversations.value.unshift(res.data)
         } catch (error) {
             err.value = error.message;

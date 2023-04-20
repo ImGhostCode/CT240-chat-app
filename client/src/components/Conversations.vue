@@ -7,7 +7,7 @@
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden border-2">
 
         <img
-          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : getSenderFull(authStore.user, conversation.users).pic"
+          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : 'http://localhost:3051/public/images/'+( getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg') "
           alt="avatar" class="h-full w-full">
       </div>
       <div class="flex flex-col ml-2">

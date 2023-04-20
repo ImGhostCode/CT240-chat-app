@@ -2,9 +2,11 @@
 import { onMounted } from 'vue';
 import { useAuthStore } from '../stores/auth.store';
 import { useToast } from 'vue-toast-notification';
+// import { useConversationStore } from "../stores/conversation.store";
 
 const authStore = useAuthStore()
 const $toast = useToast();
+// const conversationStore = useConversationStore()
 
 let timeout
 async function handleSearch(value) {
@@ -24,14 +26,18 @@ async function handleSearch(value) {
 }
 
 async function handleDelete(userId) {
-    await authStore.deleteAccount(userId)
-    if (authStore.err) {
-        $toast.error(authStore.err)
-        return
+    if(confirm('Are you sure ?')) {
+        
+        await authStore.deleteAccount(userId)
+//   await conversationStore.fetchAllConversations()
+        if (authStore.err) {
+            $toast.error(authStore.err)
+            return
+        }
+        
+        $toast.success(authStore.result.message)
+        await authStore.search('', 'Account')
     }
-
-    $toast.success(authStore.result.message)
-    await authStore.search('', 'Account')
 }
 
 
@@ -61,7 +67,7 @@ onMounted(async () => {
                     class="bg-gray-300 p-2 rounded-sm flex justify-between font-semibold mb-2">
                     <div class="flex items-center ">
                         <div class="h-[50px] w-[50px] rounded-full overflow-hidden mr-4">
-                            <img :src="acc.pic" :alt="acc.name" class="h-full w-full">
+                            <img :src="'http://localhost:3051/public/images/'+ acc.pic" :alt="acc.name" class="h-full w-full">
                         </div>
                         {{ acc.name }}
                     </div>

@@ -17,7 +17,7 @@
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                <img :src="member.pic" :alt="member.name" class="h-full w-full">
+                                <img :src="'http://localhost:3051/public/images/'+ member.pic" :alt="member.name" class="h-full w-full">
                             </div>
                             <div class="flex flex-col ml-2 items-center justify-center">
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>
