@@ -31,6 +31,9 @@ class EmailAuthentication extends AuthenticationStrategy {
     async login({ email, password }) {
         const user = await _User.findOne({ email });
 
+        if (user && user.isBanned) {
+            throw new ApiError(401, 'failed', "Your account has been banned", null);
+        }
         if (user && (await user.matchPassword(password))) {
             return new ApiResponse(200, 'success', 'Login successful', { ...user._doc, token: generateToken(user._id), })
         } else {
