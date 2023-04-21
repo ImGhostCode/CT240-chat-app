@@ -9,9 +9,10 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/HomeView.vue'),
-      beforeEnter: (to, from, next) => {
+      beforeEnter: async (to, from, next) => {
         const authStore = useAuthStore()
         authStore.getUserStored()
+        // await authStore.login({})
         if (!authStore.user) next({ name: 'login' })
         next()
       }

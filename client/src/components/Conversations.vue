@@ -7,17 +7,17 @@
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden border-2">
 
         <img
-          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : 'http://localhost:3051/public/images/'+( getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg') "
+          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : 'http://localhost:3051/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')"
           alt="avatar" class="h-full w-full">
       </div>
       <div class="flex flex-col ml-2">
         <h2 class="text-xl font-semibold">{{ !conversation.isGroupChat
           ? getSender(authStore.user, conversation.users)
           : conversation.conversationName }} </h2>
-        <p v-if="conversation.latestMessage"> {{ conversation.latestMessage.sender._id === authStore.user._id ? 'You' :
+        <!-- <p v-if="conversation.latestMessage"> {{ conversation.latestMessage.sender._id === authStore.user._id ? 'You' :
           conversation.latestMessage.sender.name }}: {{
     conversation.latestMessage.content.length > 20 ? conversation.latestMessage.content.substring(0, 10) + '...' :
-    conversation.latestMessage.content }}</p>
+    conversation.latestMessage.content }}</p> -->
       </div>
     </div>
   </div>

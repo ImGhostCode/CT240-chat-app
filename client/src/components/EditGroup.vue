@@ -4,11 +4,13 @@
         <form @submit.prevent="handleSubmit" class="bg-white p-6 w-80 shadow-lg rounded-lg " enctype="multipart/form-data">
             <h3 class="text-2xl font-bold mb-3">Edit Group</h3>
             <input v-model="newName" type="text" class="p-3 border-b-[1px] outline-none w-full mb-3">
-            <div class="h-20 w-20 rounded-full overflow-hidden mb-2 cursor-pointer">
+            <label for="image"
+                class="h-20 w-20 block border-[3px] border-gray-400 rounded-full mx-auto overflow-hidden mb-2 cursor-pointer">
                 <img :src="url || 'http://localhost:3051/public/images/' + conversationStore.conversations[conversationStore.activeIndex].imgGroup || 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg'"
                     alt="avatar" class="h-full w-full">
-            </div>
-            <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected" class="mb-3">
+            </label>
+            <input hidden type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected"
+                class="mb-3">
             <button type="submit" class="bg-blue-600 text-white text-lg font-bold px-3 py-2 rounded-sm">Submit</button>
             <button @click="$emit('show')"
                 class="bg-gray-400 text-white text-lg font-bold px-3 py-2 rounded-sm mx-2">Cancel</button>
