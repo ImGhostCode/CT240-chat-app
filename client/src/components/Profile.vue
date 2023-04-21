@@ -7,11 +7,12 @@
             <input v-model="newPassword" type="password" placeholder="password" class="p-3 border outline-none w-full mb-3">
             <input v-model="re_newPassword" type="password" placeholder="re-password"
                 class="p-3 border outline-none w-full mb-3">
-            <div class="h-20 w-20 rounded-full overflow-hidden mb-2 cursor-pointer">
+            <label for="image" class="h-20 w-20 block mx-auto rounded-full overflow-hidden mb-2 cursor-pointer">
                 <img :src="url ? url : 'http://localhost:3051/public/images/' + authStore.user.pic" alt="avatar"
                     class="h-full w-full">
-            </div>
-            <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected" class="mb-3">
+            </label>
+            <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected" class="mb-3"
+                hidden>
 
             <button class="bg-blue-600 text-white text-lg font-bold px-3 py-2 rounded-sm" type="submit"
                 :disabled="!newPassword && !selectedFile">Submit</button>

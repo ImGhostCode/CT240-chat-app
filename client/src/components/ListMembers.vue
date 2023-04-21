@@ -18,7 +18,8 @@
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                <img :src="'http://localhost:3051/public/images/'+ member.pic" :alt="member.name" class="h-full w-full">
+                                <img :src="'http://localhost:3051/public/images/' + member.pic" :alt="member.name"
+                                    class="h-full w-full">
                             </div>
                             <div class="flex flex-col ml-2 items-center justify-center">
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>
@@ -57,14 +58,16 @@ const conversationStore = useConversationStore()
 // })
 
 async function handleRemoveMember(userId) {
-    let conversationId = conversationStore.conversations[conversationStore.activeIndex]._id
-    await conversationStore.removeMemberGroup(conversationId, userId)
-    if (conversationStore.err) {
-        $toast.error(conversationStore.err)
-        return
+    if (confirm('Are you sure ?')) {
+        let conversationId = conversationStore.conversations[conversationStore.activeIndex]._id
+        await conversationStore.removeMemberGroup(conversationId, userId)
+        if (conversationStore.err) {
+            $toast.error(conversationStore.err)
+            return
+        }
+        await conversationStore.fetchAllConversations()
+        $toast.success(conversationStore.result.message)
     }
-    await conversationStore.fetchAllConversations()
-    $toast.success(conversationStore.result.message)
 
 }
 </script>
