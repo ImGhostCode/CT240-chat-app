@@ -16,7 +16,6 @@ class MessageService {
             await this.api.post('/send-message', { content, conversationId })
         ).data;
     }
-
 }
 
 export default new MessageService();

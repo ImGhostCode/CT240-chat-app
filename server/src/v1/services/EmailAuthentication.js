@@ -9,18 +9,15 @@ class EmailAuthentication extends AuthenticationStrategy {
 
     async register({ name, email, password, pic }) {
         const userExists = await _User.findOne({ email });
-
         if (userExists) {
             throw new ApiError(400, 'falied', "User already exists", null);
         }
-
         const newUser = await _User.create({
             name,
             email,
             password,
             pic,
         });
-
         if (newUser) {
             return new ApiResponse(201, 'success', 'Registration successful', { ...newUser._doc, token: generateToken(newUser._id), })
         } else {
@@ -30,7 +27,6 @@ class EmailAuthentication extends AuthenticationStrategy {
 
     async login({ email, password }) {
         const user = await _User.findOne({ email });
-
         if (user && user.isBanned) {
             throw new ApiError(401, 'failed', "Your account has been banned", null);
         }

@@ -49,7 +49,6 @@ class ConversationService {
             await this.api.delete(`/delete-group/${conversationId}`)
         ).data
     }
-
 }
 
 export default new ConversationService();

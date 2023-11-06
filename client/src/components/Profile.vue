@@ -13,7 +13,6 @@
             </label>
             <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected" class="mb-3"
                 hidden>
-
             <button class="bg-blue-600 text-white text-lg font-bold px-3 py-2 rounded-sm" type="submit"
                 :disabled="!newPassword && !selectedFile">Submit</button>
             <button @click="$emit('show')"
@@ -41,8 +40,6 @@ const onFileSelected = (event) => {
 }
 
 async function handleSubmit() {
-
-
     const image = new FormData()
     if (selectedFile.value) {
         image.append('image', selectedFile.value)

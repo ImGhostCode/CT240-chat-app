@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import messageService from "../services/message.service";
 
@@ -37,7 +37,6 @@ export const useMessageStore = defineStore("message", () => {
             isLoading.value = false;
         }
     }
-
 
     return { fetchMessages, messages, isLoading, err, sendAMessage, newMessage };
 });

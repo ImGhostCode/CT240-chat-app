@@ -14,5 +14,17 @@
 }
 
 .message_right {
-    @apply  bg-blue-500 rounded-tr-none text-left text-white
+    @apply bg-blue-500 rounded-tr-none text-left text-white
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }

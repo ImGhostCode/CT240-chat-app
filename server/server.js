@@ -3,7 +3,6 @@ const app = require('./src/app')
 const config = require("./src/v1/config/index");
 const mongoose = require("./src/v1/databases/init.mongodb");
 
-
 const { port, mongo_uri } = config.app;
 let server;
 async function startServer() {
@@ -16,7 +15,7 @@ async function startServer() {
         const io = require("socket.io")(server, {
             pingTimeout: 60000,
             cors: {
-                origin: "http://localhost:3052",
+                // origin: "http://localhost:3052/",
                 credentials: true,
             },
         });
@@ -58,7 +57,6 @@ async function startServer() {
                 socket.leave(userData._id)
             })
 
-
         })
 
     } catch (error) {
@@ -74,8 +72,5 @@ process.on("SIGINT", async () => {
         process.exit(0);
     }
 });
-
-
-
 
 startServer();

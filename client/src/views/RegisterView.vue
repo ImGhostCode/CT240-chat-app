@@ -34,7 +34,6 @@ async function handleRegister() {
         $toast.warning('Please fill all the fields ');
         return
     }
-
     await authStore.register({ name: name.value, email: email.value, password: password.value })
 
     if (authStore.err) {
@@ -42,7 +41,6 @@ async function handleRegister() {
         return
     }
     $toast.success(authStore.result.message);
-
     router.push({ name: 'login' })
 }
 </script>

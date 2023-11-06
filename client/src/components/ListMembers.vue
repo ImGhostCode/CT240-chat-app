@@ -8,9 +8,6 @@
                 </svg>
             </span>
             <h3 class="text-2xl font-bold mb-3">List Members</h3>
-            <!-- <input type="text" placeholder="Name" class="p-4 border outline-none w-full mb-3"> -->
-            <!-- <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
-                @input="$event => handleSearchUser($event.target.value)"> -->
             <div class="basis-full overflow-y-scroll max-h-64">
                 <div v-for="member in conversationStore.conversations[conversationStore.activeIndex].users"
                     :key="member._id"
@@ -41,21 +38,11 @@
 </template>
 
 <script setup>
-
 import { useConversationStore } from "../stores/conversation.store";
 import { useToast } from 'vue-toast-notification';
-import { computed, watchEffect, watch } from "vue";
-import { useAuthStore } from "./../stores/auth.store.js";
-const authStore = useAuthStore()
-
 
 const $toast = useToast();
 const conversationStore = useConversationStore()
-// let renderMembers = conversationStore.conversations[conversationStore.activeIndex].users
-
-// watchEffect(() => {
-//     renderMembers = conversationStore.conversations[conversationStore.activeIndex].users
-// })
 
 async function handleRemoveMember(userId) {
     if (confirm('Are you sure ?')) {
@@ -68,6 +55,5 @@ async function handleRemoveMember(userId) {
         await conversationStore.fetchAllConversations()
         $toast.success(conversationStore.result.message)
     }
-
 }
 </script>

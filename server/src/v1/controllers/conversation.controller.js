@@ -2,7 +2,6 @@ const ConversationService = require("../services/conversation.service")
 const ApiError = require("../utils/apiError")
 
 module.exports = {
-
     //@description     Create or fetch One to One Chat
     //@route           POST /api/conversations/
     //@access          Protected
@@ -40,20 +39,15 @@ module.exports = {
     //@access          Protected
     createGroupChat: async (req, res, next) => {
         try {
-
             const { users: members, name } = req.body
             if (!members || !name) {
                 throw new ApiError(400, 'falied', "Please Fill all the feilds", null);
             }
-
             const { _id: reqUser } = req.user
-
             if (members.length < 2) {
                 throw new ApiError(400, 'falied', "More than 2 users are required to form a group chat", null);
             }
-
             members.push(req.user);
-
             const conversationService = new ConversationService()
             const resutl = await conversationService.createGroup({ name, members, reqUser })
             return res.json(resutl)

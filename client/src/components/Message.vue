@@ -22,7 +22,6 @@
 <script setup>
 import moment from 'moment'
 import { useAuthStore } from "./../stores/auth.store.js";
-import { ref } from 'vue';
 const authStore = useAuthStore()
 const props = defineProps(['info'])
 </script>

@@ -2,11 +2,8 @@
     <div class="basis-1/3 flex flex-col bg-indigo-600">
         <NavBar />
         <Search :handleSearch="handleSearch" />
-
         <SearchResult v-if="authStore.searchUserResult" :users="authStore.searchUserResult" @handleClick="handleClick" />
         <Conversations v-else />
-
-
         <More />
     </div>
 </template>
@@ -27,7 +24,6 @@ async function handleSearch(value) {
     if (timeout) {
         clearTimeout(timeout);
     }
-
     timeout = setTimeout(async () => {
         if (value) {
             await authStore.search(value, '')
@@ -35,13 +31,10 @@ async function handleSearch(value) {
             authStore.searchUserResult = null
         }
     }, 300);
-
 }
 
 async function handleClick(userId) {
     authStore.searchUserResult = null
     await conversationStore.accessConversation(userId)
-
-
 }
 </script>

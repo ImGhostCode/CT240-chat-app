@@ -25,3 +25,21 @@ Content-Type: application/json
     "email": "admin@gmail.com",
     "password": "123456"
 }
+
+### Forgot password
+POST  {{urlDev}}/verify-code
+Content-Type: application/json
+
+{
+    "email": "quoctrang166@gmail.com"
+}
+
+### Reset password
+PATCH  {{urlDev}}/reset-password
+Content-Type: application/json
+
+{
+    "email": "quoctrang166@gmail.com",
+    "code": 937803,
+    "newPassword": "123456"
+}

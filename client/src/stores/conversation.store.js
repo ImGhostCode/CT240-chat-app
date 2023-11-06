@@ -12,7 +12,6 @@ export const useConversationStore = defineStore("conversation", () => {
 
     async function fetchAllConversations() {
         isLoading.value = true;
-        // conversations.value = null;
         err.value = null;
         try {
             const res = await conversationService.fetchAllConversations();
@@ -25,6 +24,7 @@ export const useConversationStore = defineStore("conversation", () => {
 
         }
     }
+
     async function accessConversation(userId) {
         isLoading.value = true;
         err.value = null;
@@ -33,7 +33,6 @@ export const useConversationStore = defineStore("conversation", () => {
             console.log(res);
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             const isExist = conversations.value.findIndex(tes => tes._id === res.data._id)
-
             if (isExist === -1) {
                 conversations.value.push(res.data)
                 activeIndex.value = conversations.value.length - 1
@@ -41,7 +40,6 @@ export const useConversationStore = defineStore("conversation", () => {
             } else {
                 activeIndex.value = isExist
             }
-
         } catch (error) {
             err.value = error.message;
         } finally {
@@ -94,7 +92,6 @@ export const useConversationStore = defineStore("conversation", () => {
             isLoading.value = false;
         }
     }
-
 
     async function editGroup(image) {
         isLoading.value = true;

@@ -35,7 +35,6 @@ const onFileSelected = (event) => {
 }
 
 async function handleSubmit() {
-
     const image = new FormData()
     if (selectedFile.value) {
         image.append('image', selectedFile.value)
@@ -50,8 +49,6 @@ async function handleSubmit() {
     $toast.success(conversationStore.result.message)
     emits('show')
     await conversationStore.fetchAllConversations()
-
-
 }
 
 </script>

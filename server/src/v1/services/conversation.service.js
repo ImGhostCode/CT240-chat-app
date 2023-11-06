@@ -1,14 +1,10 @@
-const _Message = require("../models/_Message.model");
 const _User = require("../models/_User.model");
 const _Conversation = require("../models/_Conversation.model");
 const ApiError = require("../utils/apiError");
 const ApiResponse = require("../utils/apiResponse");
 
 class ConversationService {
-    constructor() { }
-
     async getAccessConversation({ reqUserId, userId }) {
-
         let isConversation = await _Conversation.find({
             isGroupChat: false,
             $and: [
@@ -22,8 +18,7 @@ class ConversationService {
         isConversation = await _User.populate(isConversation, {
             path: "latestMessage.sender",
             select: "name pic email",
-        });
-
+        })
 
         if (isConversation.length > 0) {
             return new ApiResponse(200, 'success', 'Full Conversation', isConversation[0])
@@ -33,7 +28,6 @@ class ConversationService {
                 isGroupChat: false,
                 users: [reqUserId, userId],
             };
-
             const createdConversation = await _Conversation.create(conversationData);
             const newConversation = await _Conversation.findOne({ _id: createdConversation._id }).populate(
                 "users",
@@ -44,7 +38,6 @@ class ConversationService {
     }
 
     async fetchConversations({ reqUserId }) {
-
         let results = await _Conversation.find({ users: { $elemMatch: { $eq: reqUserId } } })
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
@@ -59,7 +52,6 @@ class ConversationService {
     }
 
     async createGroup({ name, members, reqUser }) {
-
         const groupChat = await _Conversation.create({
             conversationName: name,
             users: [...members],
@@ -75,7 +67,6 @@ class ConversationService {
     }
 
     async editGroup({ conversationId, newInfo }) {
-
         const updatedChat = await _Conversation.findByIdAndUpdate(
             conversationId,
             {
@@ -85,13 +76,10 @@ class ConversationService {
                 new: true,
             }
         )
-
         if (!updatedChat) {
             throw new ApiError(404, 'failed', "Group Chat Not Found", null)
         }
-
         return new ApiResponse(200, 'success', 'Group updated successful', updatedChat)
-
     }
 
     async removeMembers({ conversationId, userId }) {
@@ -115,13 +103,11 @@ class ConversationService {
     }
 
     async addMembers({ conversationId, userId }) {
-
         const memberExisted = await _Conversation.findOne({
             _id: conversationId,
             users: { $in: [userId] }
         }).exec();
         if (memberExisted) throw new ApiError(400, 'failed', "Member is already exist", null)
-
         const added = await _Conversation.findByIdAndUpdate(
             conversationId,
             {
@@ -136,12 +122,10 @@ class ConversationService {
 
         if (!added) {
             throw new ApiError(404, 'failed', "Group Chat Not Found", null)
-
         } else {
             return new ApiResponse(200, 'success', 'Added a member to group chat', added)
 
         }
-
     }
 
     async deleteGroup({ conversationId, userId }) {
@@ -149,10 +133,8 @@ class ConversationService {
             {
                 _id: conversationId,
                 groupAdmin: userId
-
             }
         )
-
         if (!deleted) {
             throw new ApiError(404, 'failed', 'Group Chat Not Found', null)
         } else {
@@ -160,6 +142,5 @@ class ConversationService {
         }
     }
 }
-
 
 module.exports = ConversationService

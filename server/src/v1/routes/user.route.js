@@ -10,6 +10,7 @@ router.post('/register', userController.registerUser)
 router.post('/login', userController.loginUser)
 router.post('/logout', userController.logoutUser)
 router.put('/:userId', verifyToken, upload.single('image'), userController.editUser)
-
+router.post('/verify-code', userController.sendVerifyCode)
+router.patch('/reset-password', userController.resetPassword)
 
 module.exports = router

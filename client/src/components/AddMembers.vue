@@ -8,7 +8,6 @@
                 </svg>
             </span>
             <h3 class="text-2xl font-bold mb-3">Add Members</h3>
-            <!-- <input type="text" placeholder="Name" class="p-4 border outline-none w-full mb-3"> -->
             <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
                 @input="$event => handleSearchUser($event.target.value)">
             <div class="basis-full overflow-y-scroll max-h-64" v-if="authStore.searchMembersResult">
@@ -17,7 +16,8 @@
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                <img :src="'http://localhost:3051/public/images/'+ member.pic" :alt="member.name" class="h-full w-full">
+                                <img :src="'http://localhost:3051/public/images/' + member.pic" :alt="member.name"
+                                    class="h-full w-full">
                             </div>
                             <div class="flex flex-col ml-2 items-center justify-center">
                                 <h2 class="text-xl font-semibold">{{ member.name }}</h2>
@@ -50,7 +50,6 @@ async function handleSearchUser(value) {
     if (timeout) {
         clearTimeout(timeout);
     }
-
     timeout = setTimeout(async () => {
         if (value) {
             await authStore.search(value, 'Group')

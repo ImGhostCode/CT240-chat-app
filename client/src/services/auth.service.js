@@ -10,26 +10,31 @@ class AuthService {
       await this.api.post("/register", data)
     ).data;
   }
+
   async login(data) {
     return await (
       await this.api.post("/login", data)
     ).data;
   }
+
   async searchUsers(keyword) {
     return await (
       await this.api.get(`/?search=${keyword}`)
     ).data;
   }
+
   async logout() {
     return await (
       await this.api.post("/logout")
     ).data;
   }
+
   async deleteAccount(userId) {
     return await (
       await this.api.delete(`/${userId}`)
     ).data;
   }
+
   async editAccount(userId, image) {
     return await (
       await this.api.put(`/${userId}`, image, {

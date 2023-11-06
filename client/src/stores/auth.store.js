@@ -11,7 +11,6 @@ export const useAuthStore = defineStore("auth", () => {
     const searchMembersResult = ref(null)
     const searchAccountResult = ref(null)
 
-
     async function register({ name, email, password }) {
         isLoading.value = true;
         result.value = null;
@@ -26,6 +25,7 @@ export const useAuthStore = defineStore("auth", () => {
             isLoading.value = false;
         }
     }
+
     async function login(data) {
         isLoading.value = true;
         result.value = null;
@@ -90,14 +90,12 @@ export const useAuthStore = defineStore("auth", () => {
             if (res.code === 401 || res.code === 400) throw new Error(res.message);
             localStorage.removeItem("userInfo");
             result.value = res
-            // user.value = null
         } catch (error) {
             err.value = error.message;
         } finally {
             isLoading.value = false;
         }
     }
-
 
     async function editAccount(userId, image) {
         isLoading.value = true;
@@ -132,8 +130,6 @@ export const useAuthStore = defineStore("auth", () => {
             isLoading.value = false;
         }
     }
-
-
 
     return {
         register, result, isLoading, err, login, user, getUserStored,

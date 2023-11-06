@@ -18,7 +18,7 @@ async function handleSearch(value) {
     }, 300);
 }
 
-async function handleDelete(userId) {
+async function handleRemoveFriend(userId) {
     if (confirm('Are you sure ?')) {
         await authStore.deleteAccount(userId)
         if (authStore.err) {
@@ -31,7 +31,7 @@ async function handleDelete(userId) {
 }
 
 onMounted(async () => {
-    await authStore.search('', 'Account')
+    //await authStore.search('', 'Account')
 })
 </script>
 
@@ -44,10 +44,10 @@ onMounted(async () => {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </span>
-            <h3 class="text-2xl font-bold mb-3">Manage Accounts</h3>
+            <h3 class="text-2xl font-bold mb-3">Friends</h3>
             <input type="text" placeholder="Name.." class="p-4 border outline-none w-full mb-3"
                 @input="$events => handleSearch($events.target.value)">
-            <ul class=" overflow-y-scroll basis-full">
+            <ul class=" overflow-y-scroll no-scrollbar basis-full">
                 <li v-for="acc in authStore.searchAccountResult"
                     class="bg-gray-300 p-2 rounded-sm flex justify-between font-semibold mb-2">
                     <div class="flex items-center ">
@@ -57,12 +57,14 @@ onMounted(async () => {
                         </div>
                         {{ acc.name }}
                     </div>
-                    <button class="border-none outline-none text-red-700 mr-3" @click="$event => handleDelete(acc._id)">
+                    <button class="border-none outline-none text-red-700 mr-3"
+                        @click="$event => handleRemoveFriend(acc._id)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                         </svg>
+
                     </button>
                 </li>
             </ul>

@@ -5,7 +5,6 @@ const ApiRes = require('../utils/apiResponse')
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-
     // @description     Get or Search all users
     // @route           GET /api/v1/user?search=
     // @access          Protected
@@ -48,7 +47,6 @@ module.exports = {
 
     },
 
-
     //@description     Auth the user
     //@route           POST /api/v1/users/login
     //@access          Public
@@ -68,7 +66,6 @@ module.exports = {
         }
 
     },
-
 
     //@description     Auth the user
     //@route           POST /api/v1/users/logout
@@ -125,5 +122,31 @@ module.exports = {
         }
     },
 
+    //@description     Forgot password
+    //@route           DELETE /api/v1/users/verify-code
+    //@access          Protected
+    sendVerifyCode: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const { email } = req.body
+            const result = await userService.sendVerifyCode({ email })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
 
+    //@description     Reset password
+    //@route           PATCH /api/v1/users/reset-password
+    //@access          Protected
+    resetPassword: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const { email, code, newPassword } = req.body
+            const result = await userService.resetPassword({ email, code, newPassword })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    }
 }

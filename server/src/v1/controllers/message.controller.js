@@ -2,7 +2,6 @@ const MessageService = require("../services/message.service")
 const ApiError = require("../utils/apiError")
 
 module.exports = {
-
     // @description     Get all messages
     // @route           GET /api/v1/messages/:conversationId
     // @access          Protected
@@ -26,7 +25,6 @@ module.exports = {
             if (!content || !conversationId) {
                 throw new ApiError(400, 'failed', 'Invalid data passed into request', null)
             }
-
             const messageService = new MessageService()
             const resutl = await messageService.createMessage({ content, conversationId, userId })
             return res.json(resutl)

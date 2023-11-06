@@ -6,9 +6,13 @@ const compression = require('compression')
 const ApiError = require("./v1/utils/apiError");
 const cookieParser = require('cookie-parser')
 const path = require('path')
+const cors = require('cors')
 
 // Pulbic 
 app.use('/public', express.static(path.join(__dirname, '/v1/public')))
+
+// cors
+app.use(cors())
 
 //user middleware
 app.use(helmet())
@@ -31,7 +35,6 @@ app.use('/api/v1', require('./v1/routes/index.router'))
 app.use((req, res, next) => {
     next(new ApiError(404, "error", "No Found", null))
 });
-
 
 // error handler middleware
 app.use((error, req, res, next) => {

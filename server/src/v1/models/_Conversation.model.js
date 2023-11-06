@@ -1,4 +1,3 @@
-
 const { Schema, model } = require("mongoose");
 
 const conversatonSchema = new Schema(
@@ -15,7 +14,5 @@ const conversatonSchema = new Schema(
     },
     { timestamps: true }
 );
-
-
 
 module.exports = model("Conversation", conversatonSchema);

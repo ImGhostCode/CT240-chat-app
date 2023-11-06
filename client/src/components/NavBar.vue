@@ -1,6 +1,5 @@
 <template>
     <div class="h-[50px] flex justify-between items-center bg-indigo-800 text-white px-3 py-8">
-
         <h3 class="text-2xl font-semibold">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="inline w-6 h-6 mr-1">
@@ -9,8 +8,6 @@
             </svg>
             <span>Chat</span>
         </h3>
-
-
         <div class="flex justify-center items-center" v-if="authStore.user">
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer border">
                 <img :src="'http://localhost:3051/public/images/' + authStore.user.pic" alt="avatar" class="h-full w-full">
@@ -29,18 +26,14 @@ import { useAuthStore } from '../stores/auth.store';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from "vue-router";
 
-
 const isShowEditProfile = ref(false)
 const authStore = useAuthStore()
 const $toast = useToast();
 const router = useRouter()
 
-
-
 function toggleEditProfile() {
     isShowEditProfile.value = !isShowEditProfile.value
 }
-
 
 const LogoutHandle = async () => {
     await authStore.logout()
@@ -51,5 +44,4 @@ const LogoutHandle = async () => {
     $toast.success(authStore.result.message);
     router.push({ name: 'login' })
 }
-
 </script>
