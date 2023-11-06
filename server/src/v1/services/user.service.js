@@ -102,9 +102,9 @@ class UserService {
         if (!verifyCode) return new ApiResponse(400, 'failed', 'Code does not exist', null)
         const createdAt = new Date(verifyCode.createdAt)
         createdAt.setMinutes(createdAt.getMinutes() + 5)
-        if (createdAt <= currentDate) return new ApiResponse(400, 'The verification code has expired', null)
+        if (createdAt <= currentDate) return new ApiResponse(400, 'failed', 'The verification code has expired', null)
         const user = await _User.findOne({ email })
-        if (!user) return new ApiResponse(400, 'User Not Found', null)
+        if (!user) return new ApiResponse(400, 'failed', 'User Not Found', null)
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(newPassword, salt);
         await _User.findByIdAndUpdate(user._id, {
@@ -113,7 +113,7 @@ class UserService {
         await _VerifiCode.deleteMany({
             email: email
         })
-        return new ApiResponse(200, 'Password updated successful', null)
+        return new ApiResponse(200, 'success', 'Password updated successful', null)
     }
 
     random4DigitNumber() {

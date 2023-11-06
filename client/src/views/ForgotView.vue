@@ -1,17 +1,15 @@
 <template>
     <div class=" w-80 bg-white rounded-xl shadow-md">
-        <form @submit.prevent="handleChangePassword" class="flex flex-col text-center px-8 py-3">
+        <form @submit.prevent="handleResetPassword" class="flex flex-col text-center px-8 py-3">
             <h2 class="text-2xl font-semibold text-blue-500 my-4">Forgot Password</h2>
             <input v-model="email" type="email" placeholder="Email"
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
             <input v-model="newPassword" type="password" placeholder="New password"
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
-            <!-- <input v-model="reNewPassword" type="re-new-password" placeholder="re-new-password"
-                class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4"> -->
             <div class="flex flex-row  gap-2 w-full mb-4">
-                <input v-model="code" type="number" placeholder="XXXX"
+                <input v-model="code" type="number" placeholder="XXXXXX"
                     class="w-2/3 shrink border-b-2 outline-none border-slate-400 px-2">
-                <button type="button"
+                <button type="button" @click="handleSendVerifyCode"
                     class="grow shrink-0 bg-blue-600 text-white text-sm font-semibold rounded-md p-3 mb-2">Send
                     code</button>
             </div>
@@ -35,17 +33,31 @@ const router = useRouter()
 const email = ref(null)
 const newPassword = ref(null)
 const code = ref(null)
-async function handleChangePassword() {
-    // if (!email.value || !password.value) {
-    //     let instance = $toast.warning('Please fill all the fields ');
-    //     return
-    // }
-    // await authStore.login({ email: email.value, password: password.value })
-    // if (authStore.err) {
-    //     $toast.error(authStore.err);
-    //     return
-    // }
-    // $toast.success(authStore.result.message);
+
+async function handleSendVerifyCode() {
+    if (!email.value || !newPassword.value) {
+        $toast.warning('Please fill all the fields');
+        return
+    }
+    await authStore.sendVerifyCode({ email: email.value })
+    if (authStore.err) {
+        $toast.error(authStore.err);
+        return
+    }
+    $toast.success(authStore.result.message);
+}
+
+async function handleResetPassword() {
+    if (!email.value || !newPassword.value || !code.value) {
+        $toast.warning('Please fill all the fields ');
+        return
+    }
+    await authStore.resetPassword({ email: email.value, newPassword: newPassword.value, code: code.value })
+    if (authStore.err) {
+        $toast.error(authStore.err);
+        return
+    }
+    $toast.success(authStore.result.message);
     router.push({ name: 'login' })
 }
 </script>

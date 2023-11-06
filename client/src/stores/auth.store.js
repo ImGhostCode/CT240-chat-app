@@ -131,9 +131,40 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    async function sendVerifyCode(data) {
+        isLoading.value = true;
+        result.value = null;
+        err.value = null;
+        try {
+            const res = await authService.sendVerifyCode(data)
+            if (res.code === 401 || res.code === 400) throw new Error(res.message);
+            result.value = res
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    async function resetPassword(data) {
+        isLoading.value = true;
+        result.value = null;
+        err.value = null;
+        try {
+            const res = await authService.resetPassword(data)
+            console.log(res);
+            if (res.code === 401 || res.code === 400) throw new Error(res.message);
+            result.value = res
+        } catch (error) {
+            err.value = error.message;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     return {
         register, result, isLoading, err, login, user, getUserStored,
         search, searchUserResult, logout, searchMembersResult, searchAccountResult, deleteAccount,
-        editAccount
+        editAccount, sendVerifyCode, resetPassword
     };
 });

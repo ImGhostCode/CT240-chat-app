@@ -44,6 +44,14 @@ class AuthService {
       })
     ).data;
   }
+
+  async sendVerifyCode(data) {
+    return await (await this.api.post(`/verify-code`, data)).data;
+  }
+
+  async resetPassword(data) {
+    return await (await this.api.patch(`/reset-password`, data)).data;
+  }
 }
 
 export default new AuthService();
