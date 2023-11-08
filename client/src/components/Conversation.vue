@@ -10,14 +10,16 @@ import { useAuthStore } from "./../stores/auth.store.js";
 import { useMessageStore } from './../stores/message.store'
 import io from "socket.io-client";
 import { useToast } from 'vue-toast-notification';
-import { getSender } from '../utils/ChatLogics';
+import { getSender, getSenderFull } from '../utils/ChatLogics';
 import RemoveMembers from './ListMembers.vue';
+import { useUserStore } from './../stores/user.store'
+
 const $toast = useToast();
-const ENDPOINT = "http://localhost:3051";
+const ENDPOINT = import.meta.env.VITE_API_URL
 const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const authStore = useAuthStore()
-
+const userStore = useUserStore()
 
 let socket
 const isShow = reactive({
@@ -28,7 +30,6 @@ const isShow = reactive({
 })
 
 function toggleMore(event) {
-
   isShow.more = !isShow.more
 }
 
@@ -61,8 +62,13 @@ async function handleDeleteGroup() {
   }
 }
 
-async function handleSentFriendRequest() {
-  //Todo
+const handleSentFriendRequest = async (friendId) => {
+  await userStore.sendFriendInvitation({ friendId })
+  if (userStore.err) {
+    $toast.error(userStore.err)
+    return
+  }
+  $toast.success(userStore.result.message)
 }
 
 const socketConnected = ref(false)
@@ -95,13 +101,15 @@ onMounted(async () => {
         ? getSender(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)
         : conversationStore.conversations[conversationStore.activeIndex].conversationName }}</h2>
       <div class="flex relative">
-        <span class="hover:cursor-pointer" @click="() => handleSentFriendRequest()"> <svg
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        <span class="hover:cursor-pointer"
+          v-if="!authStore.user.friends.includes(getSenderFull(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)._id)"
+          @click="$event => handleSentFriendRequest(getSenderFull(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)._id)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-          </svg></span>
-
+          </svg>
+        </span>
         <span v-if="conversationStore.conversations[conversationStore.activeIndex].isGroupChat"
           class="mx-2 cursor-pointer " @click.stop="toggleMore">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -110,8 +118,6 @@ onMounted(async () => {
               d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
           </svg>
         </span>
-
-
         <ul v-if="isShow.more" class="absolute right-0 top-full bg-white shadow-lg w-40 rounded-sm text-black">
           <li class="p-3 flex mb-1 cursor-pointer shadow-sm"
             v-if="!conversationStore.conversations[conversationStore.activeIndex].isGroupChat">

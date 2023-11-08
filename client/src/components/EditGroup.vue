@@ -6,7 +6,7 @@
             <input v-model="newName" type="text" class="p-3 border-b-[1px] outline-none w-full mb-3">
             <label for="image"
                 class="h-20 w-20 block border-[3px] border-gray-400 rounded-full mx-auto overflow-hidden mb-2 cursor-pointer">
-                <img :src="url || 'http://localhost:3051/public/images/' + conversationStore.conversations[conversationStore.activeIndex].imgGroup || 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg'"
+                <img :src="url || ENDPOINT + '/public/images/' + conversationStore.conversations[conversationStore.activeIndex].imgGroup || 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg'"
                     alt="avatar" class="h-full w-full">
             </label>
             <input hidden type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected"
@@ -28,6 +28,8 @@ const selectedFile = ref(null)
 const url = ref(null)
 const $toast = useToast();
 const emits = defineEmits(['show'])
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 const onFileSelected = (event) => {
     selectedFile.value = event.target.files[0]

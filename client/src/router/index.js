@@ -12,7 +12,6 @@ const router = createRouter({
       beforeEnter: async (to, from, next) => {
         const authStore = useAuthStore()
         authStore.getUserStored()
-        // await authStore.login({})
         if (!authStore.user) next({ name: 'login' })
         next()
       }

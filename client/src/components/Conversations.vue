@@ -6,7 +6,7 @@
       @click="conversationStore.activeIndex = index">
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden border-2">
         <img
-          :src="conversation.isGroupChat ? 'http://localhost:3051/public/images/' + conversation.imgGroup : 'http://localhost:3051/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')"
+          :src="conversation.isGroupChat ? ENDPOINT + '/public/images/' + conversation.imgGroup : ENDPOINT + '/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')"
           alt="avatar" class="h-full w-full">
       </div>
       <div class="flex flex-col ml-2">
@@ -26,11 +26,17 @@ import { onMounted } from "vue";
 import { useConversationStore } from "../stores/conversation.store";
 import { useAuthStore } from "./../stores/auth.store.js";
 import { getSender, getSenderFull } from "../utils/ChatLogics";
+import { useRouter } from 'vue-router'
 
 const conversationStore = useConversationStore()
 const authStore = useAuthStore()
+const router = useRouter()
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 onMounted(async () => {
   await conversationStore.fetchAllConversations()
 })
+
+
 </script>

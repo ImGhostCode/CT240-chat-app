@@ -121,6 +121,92 @@ class UserService {
         var paddedNumber = randomNumber.toString().padStart(6, '0');
         return paddedNumber;
     }
+
+    async getFriendsList({ user }) {
+        const request = await _User.findById(user._id, { password: 0 }).populate("friends", "-password -isAdmin -friends -friendsrequest -isBanned")
+        return new ApiResponse(200, 'success', 'Found friends list', request.friends)
+    }
+
+    async deleteFriend({ user, friendId }) {
+        const userId = user._id.toString()
+        await _User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: { friends: friendId }
+            })
+        await _User.findByIdAndUpdate(
+            friendId,
+            {
+                $pull: { friends: userId }
+            })
+        return new ApiResponse(200, 'success', 'Deleted friends successfully', null)
+    }
+
+    async sendFriendInvitation({ user, friendId }) {
+        const userId = user._id.toString()
+        if (user.friendsrequest.includes(friendId)) {
+            await _User.findByIdAndUpdate(
+                userId,
+                {
+                    $push: { friends: friendId },
+                    $pull: { friendsrequest: friendId }
+                })
+            await _User.findByIdAndUpdate(
+                friendId,
+                {
+                    $push: { friends: userId }
+                })
+            return new ApiResponse(200, 'success', 'Added friends successfully', null)
+        }
+        if (userId === friendId) return new ApiResponse(400, 'failed', 'The invitation could not be sent to yourself', null)
+        const friend = await _User.findById(friendId).select('-password')
+        if (!friend) return new ApiResponse(400, 'failed', 'Friend does not exist', null)
+        if (friend.friends.includes(userId)) return new ApiResponse(400, 'failed', 'Made friend', null)
+        if (friend.friendsrequest.includes(userId)) return new ApiResponse(400, 'failed', 'Sent a friend request', null)
+        await _User.findByIdAndUpdate(
+            friendId,
+            {
+                $push: { friendsrequest: userId }
+            }, {
+            new: true
+        }).select('-password')
+        return new ApiResponse(200, 'success', 'Invitation sent successfully', null)
+    }
+
+    async getFriendsRequest({ user }) {
+        const request = await _User.findById(user._id, { password: 0 }).populate("friendsrequest", "-password -isAdmin -friends -friendsrequest -isBanned")
+        return new ApiResponse(200, 'success', 'Found friends request list', request.friendsrequest)
+    }
+
+    async confirmFriendRequest({ user, friendId }) {
+        const userId = user._id.toString()
+        if (user.friend && user.friend.includes(friendId)) return new ApiResponse(400, 'failed', 'Made friend', null)
+        await _User.findByIdAndUpdate(
+            userId,
+            {
+                $push: { friends: friendId },
+                $pull: { friendsrequest: friendId }
+            })
+        await _User.findByIdAndUpdate(
+            friendId,
+            {
+                $push: { friends: userId }
+            })
+        return new ApiResponse(200, 'success', 'Added friend successfully', null)
+    }
+
+    async deleteFriendRequest({ user, friendId }) {
+        const userId = user._id.toString()
+        await _User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: { friendsrequest: friendId }
+            },
+            {
+                new: true
+            })
+        return new ApiResponse(200, 'success', 'Delete request successfully', null)
+    }
 }
 
 module.exports = UserService

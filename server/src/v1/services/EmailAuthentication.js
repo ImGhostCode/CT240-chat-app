@@ -19,7 +19,8 @@ class EmailAuthentication extends AuthenticationStrategy {
             pic,
         });
         if (newUser) {
-            return new ApiResponse(201, 'success', 'Registration successful', { ...newUser._doc, token: generateToken(newUser._id), })
+            const { password, _user } = newUser._doc
+            return new ApiResponse(201, 'success', 'Registration successful', { ..._user, token: generateToken(newUser._id), })
         } else {
             throw new Error(400, 'failed', "User not found", null);
         }
@@ -31,7 +32,8 @@ class EmailAuthentication extends AuthenticationStrategy {
             throw new ApiError(401, 'failed', "Your account has been banned", null);
         }
         if (user && (await user.matchPassword(password))) {
-            return new ApiResponse(200, 'success', 'Login successful', { ...user._doc, token: generateToken(user._id), })
+            const { password, ..._user } = user._doc
+            return new ApiResponse(200, 'success', 'Login successful', { ..._user, token: generateToken(user._id), })
         } else {
             throw new ApiError(401, 'failed', "Invalid Email or Password", null);
         }

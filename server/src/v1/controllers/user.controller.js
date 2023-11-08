@@ -59,7 +59,13 @@ module.exports = {
                 throw new ApiError(400, 'failed', "Please Enter all the Feilds", null);
             }
             const result = await userService.login({ email, password })
-            res.cookie('accessToken', result.data.token, { httpOnly: true, secure: false, path: '/', sameSite: 'strict' })
+            res.cookie('accessToken', result.data.token, {
+                httpOnly: false,
+                secure: false,
+                path: '/',
+                sameSite: 'strict',
+
+            })
             return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })
@@ -144,6 +150,94 @@ module.exports = {
             const userService = new UserService()
             const { email, code, newPassword } = req.body
             const result = await userService.resetPassword({ email, code, newPassword })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Get list friends
+    //@route           GET /api/v1/users/friends-list
+    //@access          Protected
+    getFriendsList: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const result = await userService.getFriendsList({ user })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Delete friend
+    //@route           PATCH /api/v1/users/delete-friend/:friendId
+    //@access          Protected
+    deleteFriend: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const friendId = req.params.friendId
+            const result = await userService.deleteFriend({ user, friendId })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Send friend invitation
+    //@route           PATCH /api/v1/users/send-friend-invitations/:friendId
+    //@access          Protected
+    sendFriendInvitations: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const friendId = req.params.friendId
+            const result = await userService.sendFriendInvitation({ user, friendId })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Get friends request
+    //@route           GET /api/v1/users/friends-request
+    //@access          Protected
+    getFriendsRequest: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const result = await userService.getFriendsRequest({ user })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Confirm friend request
+    //@route           PATCH /api/v1/users/confirm-friend-request/:friendId
+    //@access          Protected
+    confirmFriendRequest: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const friendId = req.params.friendId
+            const result = await userService.confirmFriendRequest({ user, friendId })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Delete friend request
+    //@route           PATCH /api/v1/users/delete-friend-request/:friendId
+    //@access          Protected
+    deleteFriendRequest: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const friendId = req.params.friendId
+            const result = await userService.deleteFriendRequest({ user, friendId })
             return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })

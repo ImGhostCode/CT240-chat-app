@@ -3,21 +3,36 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema(
     {
-        name: { type: "String", required: true },
-        email: { type: "String", unique: true, required: true },
-        password: { type: "String", required: true },
+        name: {
+            type: "String",
+            required: true
+        },
+        email: {
+            type: "String",
+            unique: true, required: true
+        },
+        password: {
+            type: "String",
+            required: true
+        },
         pic: {
             type: "String",
             required: true,
-            default:
-                "anonymous-avatar.jpg",
+            default: "anonymous-avatar.jpg",
         },
         isAdmin: {
             type: Boolean,
             required: true,
             default: false,
         },
-        friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }],
+        friendsrequest: [{
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }],
         isBanned: {
             type: Boolean,
             required: true,

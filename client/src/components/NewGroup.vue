@@ -19,7 +19,7 @@
                         <div class="flex items-center justify-between ">
                             <div class="flex items-center">
                                 <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                    <img :src="'http://localhost:3051/public/images/' + member.pic" :alt="member.name"
+                                    <img :src="ENDPOINT + '/public/images/' + member.pic" :alt="member.name"
                                         class="h-full w-full">
                                 </div>
                                 <div class="flex flex-col ml-2 items-center justify-center">
@@ -49,6 +49,9 @@ const emits = defineEmits(['show'])
 const authStore = useAuthStore()
 const conversationStore = useConversationStore()
 const $toast = useToast();
+
+const ENDPOINT = import.meta.env.VITE_API_URL
+
 let timeout
 async function handleSearchUser(value) {
     if (timeout) {

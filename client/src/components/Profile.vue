@@ -8,7 +8,7 @@
             <input v-model="re_newPassword" type="password" placeholder="re-password"
                 class="p-3 border outline-none w-full mb-3">
             <label for="image" class="h-20 w-20 block mx-auto rounded-full overflow-hidden mb-2 cursor-pointer">
-                <img :src="url ? url : 'http://localhost:3051/public/images/' + authStore.user.pic" alt="avatar"
+                <img :src="url ? url : ENDPOINT + '/public/images/' + authStore.user.pic" alt="avatar"
                     class="h-full w-full">
             </label>
             <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected" class="mb-3"
@@ -33,6 +33,8 @@ const $toast = useToast();
 const emits = defineEmits(['show'])
 const newPassword = ref(null)
 const re_newPassword = ref(null)
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 const onFileSelected = (event) => {
     selectedFile.value = event.target.files[0]

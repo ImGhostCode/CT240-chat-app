@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
     "name": "ghost",
-    "email": "test@gmail.com",
+    "email": "test4@gmail.com",
     "password": "123456",
     "pic": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fps.w.org%2Fuser-avatar-reloaded%2Fassets%2Ficon-256x256.png%3Frev%3D2540745&tbnid=4tCxPvBodOnWbM&vet=12ahUKEwjc-4Tr6pb-AhWx93MBHbhpA8EQMygOegUIARDfAQ..i&imgrefurl=https%3A%2F%2Fis.wordpress.org%2Fplugins%2Fuser-avatar-reloaded%2F&docid=9MV4mY-wsJayeM&w=257&h=257&itg=1&q=avatar%20user&client=ubuntu-sn&ved=2ahUKEwjc-4Tr6pb-AhWx93MBHbhpA8EQMygOegUIARDfAQ"
 }
@@ -22,7 +22,7 @@ POST  {{urlDev}}/login
 Content-Type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "test2@gmail.com",
     "password": "123456"
 }
 
@@ -31,7 +31,7 @@ POST  {{urlDev}}/verify-code
 Content-Type: application/json
 
 {
-    "email": "quoctrang166@gmail.com"
+    "email": "@gmail.com"
 }
 
 ### Reset password
@@ -39,7 +39,31 @@ PATCH  {{urlDev}}/reset-password
 Content-Type: application/json
 
 {
-    "email": "quoctrang166@gmail.com",
+    "email": "@gmail.com",
     "code": 937803,
     "newPassword": "123456"
 }
+
+### Get list friends
+GET {{urlDev}}/friends-list
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTI4NzAzNywiZXhwIjoxNjk5MzczNDM3fQ.Ad7QWrk1xV8dy1acZZ9NNl1B8Vfg_sNJP07jafrgJdI
+
+### Delete friend
+PATCH  {{urlDev}}/delete-friend/6548f18226a7630e6fc20a3b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTI4NzAzNywiZXhwIjoxNjk5MzczNDM3fQ.Ad7QWrk1xV8dy1acZZ9NNl1B8Vfg_sNJP07jafrgJdI
+
+### Send friend invitation
+PATCH  {{urlDev}}/send-friend-invitations/653ef7afb3887437d441d410
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDhmMTc2MjZhNzYzMGU2ZmMyMGEzOCIsImlhdCI6MTY5OTQxNDAwMSwiZXhwIjoxNjk5NTAwNDAxfQ.HoCjZafxZuDPImFxpYnfIg6Zzl8VkDuJ6G6XKnDyjGE
+
+### Get friends request
+GET {{urlDev}}/friends-request
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTQxNDE0OCwiZXhwIjoxNjk5NTAwNTQ4fQ.JOJYz_5BvTxmM22XMZrKrZ8DgKok3xy_AMkwBAFUoGY
+
+### Confirm friend request
+PATCH  {{urlDev}}/confirm-friend-request/6548f18226a7630e6fc20a3b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTI4NzAzNywiZXhwIjoxNjk5MzczNDM3fQ.Ad7QWrk1xV8dy1acZZ9NNl1B8Vfg_sNJP07jafrgJdI
+
+### delete friend request
+PATCH  {{urlDev}}/delete-friend-request/6548f18226a7630e6fc20a3b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTI4NzAzNywiZXhwIjoxNjk5MzczNDM3fQ.Ad7QWrk1xV8dy1acZZ9NNl1B8Vfg_sNJP07jafrgJdI

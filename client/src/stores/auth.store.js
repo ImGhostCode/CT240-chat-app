@@ -1,8 +1,13 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useCookies } from "vue3-cookies"
+import { useRouter } from 'vue-router'
 import authService from "../services/auth.service";
+import jwt_decode from 'jwt-decode'
 
 export const useAuthStore = defineStore("auth", () => {
+    const { cookies } = useCookies()
+    const router = useRouter()
     const result = ref(null);
     const isLoading = ref(false);
     const err = ref(null);
@@ -162,9 +167,22 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    const checkToken = () => {
+        const token = cookies.get('accessToken')
+        if (token) {
+            const decoded = jwt_decode(token)
+            if (decoded.exp < Date.now() / 1000) {
+                cookies.remove('accessToken')
+                router.push({ name: 'login' })
+            }
+        } else {
+            router.push({ name: 'login' })
+        }
+    }
+
     return {
         register, result, isLoading, err, login, user, getUserStored,
         search, searchUserResult, logout, searchMembersResult, searchAccountResult, deleteAccount,
-        editAccount, sendVerifyCode, resetPassword
+        editAccount, sendVerifyCode, resetPassword, checkToken
     };
 });

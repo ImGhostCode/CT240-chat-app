@@ -6,6 +6,8 @@ import { useToast } from 'vue-toast-notification';
 const authStore = useAuthStore()
 const $toast = useToast();
 
+const ENDPOINT = import.meta.env.VITE_API_URL
+
 let timeout
 async function handleSearch(value) {
     if (timeout) { clearTimeout(timeout); }
@@ -52,8 +54,7 @@ onMounted(async () => {
                     class="bg-gray-300 p-2 rounded-sm flex justify-between font-semibold mb-2">
                     <div class="flex items-center ">
                         <div class="h-[50px] w-[50px] rounded-full overflow-hidden mr-4 border-2 border-indigo-600">
-                            <img :src="'http://localhost:3051/public/images/' + acc.pic" :alt="acc.name"
-                                class="h-full w-full">
+                            <img :src="ENDPOINT + '/public/images/' + acc.pic" :alt="acc.name" class="h-full w-full">
                         </div>
                         {{ acc.name }}
                     </div>

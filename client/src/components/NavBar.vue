@@ -10,7 +10,7 @@
         </h3>
         <div class="flex justify-center items-center" v-if="authStore.user">
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer border">
-                <img :src="'http://localhost:3051/public/images/' + authStore.user.pic" alt="avatar" class="h-full w-full">
+                <img :src="ENDPOINT + '/public/images/' + authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
             <div class="text-lg mr-3">{{ authStore.user.name }}</div>
             <button @click="LogoutHandle" class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
@@ -30,6 +30,8 @@ const isShowEditProfile = ref(false)
 const authStore = useAuthStore()
 const $toast = useToast();
 const router = useRouter()
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 function toggleEditProfile() {
     isShowEditProfile.value = !isShowEditProfile.value

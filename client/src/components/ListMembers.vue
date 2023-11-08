@@ -15,7 +15,7 @@
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <div class="h-[30px] w-[30px] rounded-full overflow-hidden">
-                                <img :src="'http://localhost:3051/public/images/' + member.pic" :alt="member.name"
+                                <img :src="ENDPOINT + '/public/images/' + member.pic" :alt="member.name"
                                     class="h-full w-full">
                             </div>
                             <div class="flex flex-col ml-2 items-center justify-center">
@@ -43,6 +43,8 @@ import { useToast } from 'vue-toast-notification';
 
 const $toast = useToast();
 const conversationStore = useConversationStore()
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 async function handleRemoveMember(userId) {
     if (confirm('Are you sure ?')) {
