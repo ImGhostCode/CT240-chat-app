@@ -4,6 +4,7 @@ import { useMessageStore } from './../stores/message.store'
 import Message from "./Message.vue";
 
 const messageStore = useMessageStore()
+
 const scroll_bottom = ref(null)
 
 onUpdated(() => {

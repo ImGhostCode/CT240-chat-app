@@ -1,9 +1,10 @@
 <script setup>
-import Message from './Message.vue';
+import Message from './Message.vue'
 import { useMessageStore } from '../stores/message.store'
 import { onUpdated, ref, watch } from "vue";
 
 const messageStore = useMessageStore()
+
 const scroll_bottom = ref(null)
 
 onUpdated(() => {

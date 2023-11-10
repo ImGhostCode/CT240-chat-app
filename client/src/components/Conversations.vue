@@ -5,38 +5,33 @@
       :class="(index === conversationStore.activeIndex) ? 'bg-indigo-800' : 'bg-indigo-600'"
       @click="conversationStore.activeIndex = index">
       <div class="h-[50px] w-[50px] rounded-full overflow-hidden border-2">
-        <img
-          :src="conversation.isGroupChat ? ENDPOINT + '/public/images/' + conversation.imgGroup : ENDPOINT + '/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')"
-          alt="avatar" class="h-full w-full">
+        <img alt="avatar" class="h-full w-full"
+          :src="conversation.isGroupChat ? ENDPOINT + '/public/images/' + conversation.imgGroup : ENDPOINT + '/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')">
       </div>
       <div class="flex flex-col ml-2">
-        <h2 class="text-xl font-semibold">{{ !conversation.isGroupChat
-          ? getSender(authStore.user, conversation.users)
-          : conversation.conversationName }} </h2>
+        <h2 class="text-xl font-semibold">{{
+          !conversation.isGroupChat ? getSender(authStore.user, conversation.users) : conversation.conversationName }}
+        </h2>
       </div>
     </div>
   </div>
-  <div class="" v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
-  <div class="" v-else-if="conversationStore.isLoading">Loading...</div>
-  <div class="" v-else>No conversatons</div>
+  <div v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
+  <div v-else-if="conversationStore.isLoading">Loading...</div>
+  <div v-else>No conversatons</div>
 </template>
 
 <script setup>
 import { onMounted } from "vue";
 import { useConversationStore } from "../stores/conversation.store";
-import { useAuthStore } from "./../stores/auth.store.js";
+import { useAuthStore } from "./../stores/auth.store";
 import { getSender, getSenderFull } from "../utils/ChatLogics";
-import { useRouter } from 'vue-router'
+
+const ENDPOINT = import.meta.env.VITE_API_URL
 
 const conversationStore = useConversationStore()
 const authStore = useAuthStore()
-const router = useRouter()
-
-const ENDPOINT = import.meta.env.VITE_API_URL
 
 onMounted(async () => {
   await conversationStore.fetchAllConversations()
 })
-
-
 </script>

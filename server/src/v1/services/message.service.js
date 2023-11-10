@@ -38,6 +38,7 @@ class MessageService {
 
     async createImageMessage({ files, conversationId, userId }) {
         let message = null
+        let messages = []
         for (let i = 0; i < files.length; i++) {
             let newMessage = {
                 sender: userId,
@@ -52,9 +53,10 @@ class MessageService {
                 path: "conversation.users",
                 select: "name pic email",
             });
-            await _Conversation.findByIdAndUpdate(conversationId, { latestMessage: message });
+            messages.push(message)
         }
-        return new ApiResponse(201, 'success', 'Send a message successful', message)
+        await _Conversation.findByIdAndUpdate(conversationId, { latestMessage: message });
+        return new ApiResponse(201, 'success', 'Send a message successful', messages)
     }
 }
 

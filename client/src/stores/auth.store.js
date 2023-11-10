@@ -2,12 +2,14 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useCookies } from "vue3-cookies"
 import { useRouter } from 'vue-router'
-import authService from "../services/auth.service";
 import jwt_decode from 'jwt-decode'
+import authService from "../services/auth.service";
 
 export const useAuthStore = defineStore("auth", () => {
     const { cookies } = useCookies()
+
     const router = useRouter()
+
     const result = ref(null);
     const isLoading = ref(false);
     const err = ref(null);
@@ -113,7 +115,6 @@ export const useAuthStore = defineStore("auth", () => {
             result.value = res
             user.value = res.data
             localStorage.setItem("userInfo", JSON.stringify(res.data));
-
         } catch (error) {
             err.value = error.message;
         } finally {

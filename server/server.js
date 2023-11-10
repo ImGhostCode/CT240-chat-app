@@ -41,12 +41,29 @@ async function startServer() {
             })
 
             socket.on('new message', newMessageRecieved => {
-                let conversation = newMessageRecieved.conversation
-                if (!conversation.users) return console.log('Conversation.users not defined');
-                conversation.users.forEach(user => {
-                    if (user._id === newMessageRecieved.sender._id) return
-                    socket.in(user._id).emit('message recieved', newMessageRecieved)
-                });
+                try {
+                    let conversation = newMessageRecieved.conversation
+                    if (!conversation.users) return console.log('Conversation.users not defined');
+                    conversation.users.forEach(user => {
+                        if (user._id === newMessageRecieved.sender._id) return
+                        socket.in(user._id).emit('message recieved', newMessageRecieved)
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+
+            socket.on('new images message', newMessageImageRecieved => {
+                try {
+                    let conversation = newMessageImageRecieved[0].conversation
+                    if (!conversation.users) return console.log('Conversation.users not defined');
+                    conversation.users.forEach(user => {
+                        if (user._id === newMessageImageRecieved[0].sender._id) return
+                        socket.in(user._id).emit('images message recieved', newMessageImageRecieved)
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
             })
 
             socket.off('setup', () => {

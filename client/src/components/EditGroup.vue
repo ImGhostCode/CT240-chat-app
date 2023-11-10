@@ -22,14 +22,17 @@
 import { ref } from 'vue';
 import { useConversationStore } from '../stores/conversation.store';
 import { useToast } from 'vue-toast-notification';
+
 const conversationStore = useConversationStore()
+const $toast = useToast()
+
+const ENDPOINT = import.meta.env.VITE_API_URL
+
 const newName = ref(conversationStore.conversations[conversationStore.activeIndex].conversationName)
 const selectedFile = ref(null)
 const url = ref(null)
-const $toast = useToast();
-const emits = defineEmits(['show'])
 
-const ENDPOINT = import.meta.env.VITE_API_URL
+const emits = defineEmits(['show'])
 
 const onFileSelected = (event) => {
     selectedFile.value = event.target.files[0]
@@ -52,5 +55,4 @@ async function handleSubmit() {
     emits('show')
     await conversationStore.fetchAllConversations()
 }
-
 </script>

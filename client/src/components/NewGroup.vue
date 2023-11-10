@@ -9,7 +9,6 @@
             </span>
             <h3 class="text-2xl font-bold mb-3">New group</h3>
             <input type="text" placeholder="Name group..." class="p-4 border outline-none w-full mb-3" v-model="nameGroup">
-
             <input type="text" placeholder="Search users..." class="p-4 border outline-none w-full mb-3"
                 @input="$event => handleSearchUser($event.target.value)">
             <div class="basis-full overflow-y-scroll max-h-64" v-if="authStore.searchMembersResult">
@@ -33,8 +32,9 @@
                     </label>
                 </div>
             </div>
-            <button class="bg-blue-600 text-white text-lg font-bold w-full px-3 py-2 rounded-sm "
-                @click="handleCreateGroup">Create</button>
+            <button class="bg-blue-600 text-white text-lg font-bold w-full px-3 py-2 rounded-sm" @click="handleCreateGroup">
+                Create
+            </button>
         </div>
     </div>
 </template>
@@ -46,9 +46,13 @@ import { useConversationStore } from '../stores/conversation.store'
 import { useToast } from 'vue-toast-notification';
 
 const emits = defineEmits(['show'])
+
 const authStore = useAuthStore()
 const conversationStore = useConversationStore()
-const $toast = useToast();
+const $toast = useToast()
+
+const addedMembers = ref([])
+const nameGroup = ref(null)
 
 const ENDPOINT = import.meta.env.VITE_API_URL
 
@@ -66,8 +70,6 @@ async function handleSearchUser(value) {
     }, 300);
 }
 
-const addedMembers = ref([])
-const nameGroup = ref(null)
 async function handleCreateGroup() {
     if (!nameGroup.value) {
         $toast.error('Name group is required!')

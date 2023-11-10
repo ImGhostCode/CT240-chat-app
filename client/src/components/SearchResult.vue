@@ -5,7 +5,6 @@
             :key="user._id">
             <div class="flex mb-2">
                 <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
-
                     <img :src="ENDPOINT + '/public/images/' + user.pic" alt="avatar" class="h-full w-full">
                 </div>
                 <div class="flex flex-col ml-2 items-center justify-center">
@@ -14,12 +13,13 @@
             </div>
         </div>
     </div>
-    <div class="" v-else-if="!props.users">No users</div>
-    <div class="" v-else>Loading...</div>
+    <div v-else-if="!props.users">No users</div>
+    <div v-else>Loading...</div>
 </template>
 
 <script setup>
 const props = defineProps(['users'])
 const emits = defineEmits(['handleClick'])
+
 const ENDPOINT = import.meta.env.VITE_API_URL
 </script>

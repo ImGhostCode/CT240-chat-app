@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted } from 'vue';
+import { useAuthStore } from '../stores/auth.store'
 import Conversation from '../components/Conversation.vue';
 import SideBar from '../components/SideBar.vue';
-import { useAuthStore } from '../stores/auth.store'
 
 const authStore = useAuthStore()
 
 onMounted(() => {
+  authStore.checkToken()
   setInterval(() => {
     authStore.checkToken()
   }, 60000)

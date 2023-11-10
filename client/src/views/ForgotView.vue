@@ -30,6 +30,7 @@ import { useRouter } from "vue-router";
 const authStore = useAuthStore()
 const $toast = useToast();
 const router = useRouter()
+
 const email = ref(null)
 const newPassword = ref(null)
 const code = ref(null)

@@ -21,14 +21,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
 import Profile from './Profile.vue';
 import { useAuthStore } from '../stores/auth.store';
 import { useToast } from 'vue-toast-notification';
-import { useRouter } from "vue-router";
 
 const isShowEditProfile = ref(false)
 const authStore = useAuthStore()
-const $toast = useToast();
+const $toast = useToast()
 const router = useRouter()
 
 const ENDPOINT = import.meta.env.VITE_API_URL

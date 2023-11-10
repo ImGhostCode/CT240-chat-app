@@ -2,20 +2,21 @@
 import Messages from './Messages.vue';
 import Input from './Input.vue';
 import MessagesGroup from './MessagesGroup.vue';
-import { ref, reactive, onMounted, watchEffect } from 'vue';
 import AddMembers from './AddMembers.vue';
 import EditGroup from './EditGroup.vue';
-import { useConversationStore } from "../stores/conversation.store";
-import { useAuthStore } from "./../stores/auth.store.js";
-import { useMessageStore } from './../stores/message.store'
-import io from "socket.io-client";
+import RemoveMembers from './ListMembers.vue';
+import { ref, reactive, onMounted, watchEffect } from 'vue';
 import { useToast } from 'vue-toast-notification';
 import { getSender, getSenderFull } from '../utils/ChatLogics';
-import RemoveMembers from './ListMembers.vue';
+import { useConversationStore } from "../stores/conversation.store";
+import { useMessageStore } from './../stores/message.store'
 import { useUserStore } from './../stores/user.store'
+import { useAuthStore } from "./../stores/auth.store";
+import io from "socket.io-client";
 
-const $toast = useToast();
 const ENDPOINT = import.meta.env.VITE_API_URL
+
+const $toast = useToast()
 const messageStore = useMessageStore()
 const conversationStore = useConversationStore()
 const authStore = useAuthStore()
@@ -29,7 +30,7 @@ const isShow = reactive({
   removeMembers: false
 })
 
-function toggleMore(event) {
+function toggleMore() {
   isShow.more = !isShow.more
 }
 
@@ -48,6 +49,15 @@ function toggleRemoveMembers() {
 async function sendMessage(content) {
   await messageStore.sendAMessage(content, conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
   socket.emit("new message", messageStore.newMessage);
+}
+
+async function sendImagesMessage(files) {
+  const images = new FormData()
+  for (let i = 0; i < files.length; i++) {
+    images.append('images', files[i])
+  }
+  images.append('conversationId', conversationStore.conversations[conversationStore.activeIndex]._id)
+  await messageStore.sendImagesMessage(images)
 }
 
 async function handleDeleteGroup() {
@@ -79,6 +89,10 @@ onMounted(async () => {
   socket = io(ENDPOINT);
   socket.on("message recieved", async (newMessageRecieved) => {
     messageStore.messages.push(newMessageRecieved)
+    await conversationStore.fetchAllConversations()
+  });
+  socket.on("images message recieved", async (newMessageImageRecieved) => {
+    messageStore.messages.push(...newMessageImageRecieved)
     await conversationStore.fetchAllConversations()
   });
   watchEffect(async () => {
@@ -182,11 +196,11 @@ onMounted(async () => {
     </div>
     <Messages v-if="!conversationStore.conversations[conversationStore.activeIndex].isGroupChat" />
     <MessagesGroup v-if="conversationStore.conversations[conversationStore.activeIndex].isGroupChat" />
-    <Input :sendMessage="sendMessage" />
+    <Input :sendMessage="sendMessage" :sendImagesMessage="sendImagesMessage" />
   </div>
-  <div class="" v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
-  <div class="" v-else-if="conversationStore.isLoading">Loading...</div>
-  <div class=" h-full w-full flex justify-center items-center font-semibold text-2xl text-gray-400" v-else>
+  <div v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
+  <div v-else-if="conversationStore.isLoading">Loading...</div>
+  <div v-else class="h-full w-full flex justify-center items-center font-semibold text-2xl text-gray-400">
     Select a conversation to start chat
   </div>
   <AddMembers v-if="isShow.addMembers" @show="toggleAddMembers" />

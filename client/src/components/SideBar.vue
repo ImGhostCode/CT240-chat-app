@@ -16,10 +16,11 @@ import More from './More.vue';
 import SearchResult from './SearchResult.vue';
 import { useAuthStore } from '../stores/auth.store'
 import { useConversationStore } from '../stores/conversation.store';
+
 const conversationStore = useConversationStore()
+const authStore = useAuthStore()
 
 let timeout
-const authStore = useAuthStore()
 async function handleSearch(value) {
     if (timeout) {
         clearTimeout(timeout);

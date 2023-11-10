@@ -22,17 +22,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useToast } from 'vue-toast-notification';
-import { useAuthStore } from '../stores/auth.store';
+import { ref } from 'vue'
+import { useToast } from 'vue-toast-notification'
+import { useAuthStore } from '../stores/auth.store'
 
 const authStore = useAuthStore()
+const $toast = useToast()
+
 const selectedFile = ref(null)
 const url = ref(null)
-const $toast = useToast();
-const emits = defineEmits(['show'])
 const newPassword = ref(null)
 const re_newPassword = ref(null)
+
+const emits = defineEmits(['show'])
 
 const ENDPOINT = import.meta.env.VITE_API_URL
 

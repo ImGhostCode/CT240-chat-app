@@ -4,7 +4,7 @@ import { useUserStore } from '../stores/user.store';
 import { useToast } from 'vue-toast-notification';
 
 const userStore = useUserStore()
-const $toast = useToast();
+const $toast = useToast()
 
 const ENDPOINT = import.meta.env.VITE_API_URL
 

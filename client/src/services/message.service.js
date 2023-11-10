@@ -16,6 +16,16 @@ class MessageService {
             await this.api.post('/send-message', { content, conversationId })
         ).data;
     }
+
+    async sendImagesMessage({ files }) {
+        return await (
+            await this.api.post('/send-images', files, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        ).data
+    }
 }
 
 export default new MessageService();
