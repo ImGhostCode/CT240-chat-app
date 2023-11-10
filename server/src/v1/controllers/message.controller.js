@@ -31,7 +31,21 @@ module.exports = {
         } catch (error) {
             return res.json({ ...error, message: error.message })
         }
+    },
+
+    //@description     Create new image message
+    //@route           POST /api/messages/send-images
+    //@access          Protected
+    sendImageMessage: async (req, res, next) => {
+        try {
+            const files = req.files
+            const { conversationId } = req.body
+            const { _id: userId } = req.user
+            const messageService = new MessageService()
+            const resutl = await messageService.createImageMessage({ files, conversationId, userId })
+            return res.json(resutl)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
     }
-
-
 }

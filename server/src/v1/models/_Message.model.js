@@ -6,6 +6,7 @@ const messageSchema = new Schema(
         content: { type: String, trim: true },
         conversation: { type: Schema.Types.ObjectId, ref: "Conversation" },
         readBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
+        isImage: { type: Boolean, default: false, require: true }
     },
     { timestamps: true }
 );

@@ -14,3 +14,13 @@ Content-Type: application/json
     "content": "alo alo test1",
     "conversationId": "64317d42639b741e184c0001"
 }
+
+###  send a message to a conversation
+POST {{urlDev}}/send-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmY4ZjQwMzAzMTkzZjU5Y2E1ODcxNSIsImlhdCI6MTY4MDk2OTY4NiwiZXhwIjoxNjgxMDU2MDg2fQ.AdZ0WM1xB5GBKds5vRZVrsqZT99H4L_FxZckQAXVjoo
+Content-Type: application/json
+
+{
+    "content": "alo alo test1",
+    "conversationId": "64317d42639b741e184c0001"
+}
