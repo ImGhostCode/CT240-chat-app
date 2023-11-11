@@ -12,7 +12,7 @@
             <div @click="toggleEditProfile" class="h-8 w-8 rounded-full overflow-hidden mr-3 cursor-pointer border">
                 <img :src="ENDPOINT + '/public/images/' + authStore.user.pic" alt="avatar" class="h-full w-full">
             </div>
-            <div class="text-lg mr-3">{{ authStore.user.name }}</div>
+            <div class="text-lg mr-3 truncate max-w-[100px]">{{ authStore.user.name }}</div>
             <button @click="LogoutHandle" class="border outline-none px-1 py-2 font-semibold rounded">Logout</button>
         </div>
     </div>

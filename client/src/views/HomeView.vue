@@ -6,12 +6,12 @@ import SideBar from '../components/SideBar.vue';
 
 const authStore = useAuthStore()
 
-onMounted(() => {
-  authStore.checkToken()
-  setInterval(() => {
-    authStore.checkToken()
-  }, 60000)
-})
+// onMounted(() => {
+//   authStore.checkToken()
+//   setInterval(() => {
+//     authStore.checkToken()
+//   }, 60000)
+// })
 </script>
 
 <template>

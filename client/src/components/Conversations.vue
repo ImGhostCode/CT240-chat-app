@@ -11,7 +11,7 @@
           :src="conversation.isGroupChat ? ENDPOINT + '/public/images/' + conversation.imgGroup : ENDPOINT + '/public/images/' + (getSenderFull(authStore.user, conversation.users)?.pic || 'anonymous-avatar.jpg')">
       </div>
       <div class="flex flex-col w-[100%]">
-        <h2 class="text-xl font-semibold mb-[0.5px]">
+        <h2 class="text-xl font-semibold mb-[0.5px] truncate max-w-[150px]">
           {{ !conversation.isGroupChat ? getSender(authStore.user, conversation.users) : conversation.conversationName }}
         </h2>
         <div class="flex text-xs w-[100%] justify-between" v-if="conversation.latestMessage">

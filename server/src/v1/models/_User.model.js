@@ -5,7 +5,8 @@ const userSchema = new Schema(
     {
         name: {
             type: "String",
-            required: true
+            required: true,
+            maxLength: 30,
         },
         email: {
             type: "String",

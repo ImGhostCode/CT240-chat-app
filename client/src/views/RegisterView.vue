@@ -2,7 +2,7 @@
     <div @submit.prevent="handleRegister" class="w-80 bg-white rounded-xl shadow-md">
         <form class="flex flex-col text-center px-8 py-3">
             <h2 class="text-2xl font-semibold text-blue-500 my-4">Register Chat</h2>
-            <input v-model="name" type="text" placeholder="username" maxlength="20"
+            <input v-model="name" type="text" placeholder="username" maxlength="30"
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
             <input v-model="email" type="email" placeholder="email"
                 class="px-2 py-3 border-b-2 outline-none border-slate-400 mb-4">
