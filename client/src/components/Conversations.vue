@@ -14,9 +14,9 @@
         <h2 class="text-xl font-semibold mb-[0.5px]">
           {{ !conversation.isGroupChat ? getSender(authStore.user, conversation.users) : conversation.conversationName }}
         </h2>
-        <div class="flex text-xs w-[100%] justify-between">
+        <div class="flex text-xs w-[100%] justify-between" v-if="conversation.latestMessage">
           <div class="truncate w-[80%] max-w-[150px] basis-2/3"
-            :class="authStore.user._id == conversation.latestMessage.sender._id ? '' : 'text-yellow-400'">
+            :class="authStore.user._id !== conversation.latestMessage.sender?._id ? '' : 'text-yellow-400'">
             {{ authStore.user._id == conversation.latestMessage.sender._id ? 'You: ' : '' }}
             {{ conversation.latestMessage.isImage ? '[Image]' : conversation.latestMessage.content }}
           </div>
