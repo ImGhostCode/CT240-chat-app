@@ -16,8 +16,8 @@
                 :class="props.info.sender._id === authStore.user._id ? '' : 'text-left'">
                 {{ props.info.content }}
             </p>
-            <p v-else class="w-full" :class="props.info.sender._id === authStore.user._id ? '' : 'text-left'">
-                <img :src="props.info.content" :alt="props.info.content">
+            <p v-else class="w-full bg-white" :class="props.info.sender._id === authStore.user._id ? '' : 'text-left'">
+                <img class="w-[200px] object-cover" :src="props.info.content" :alt="props.info.content">
             </p>
             <span class="text-xs ">{{ moment(props.info.updatedAt).format('LT') }}</span>
         </div>

@@ -26,7 +26,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { useConversationStore } from './../stores/conversation.store'
+
+const conversationStore = useConversationStore()
 
 const props = defineProps(['sendMessage', 'sendImagesMessage'])
 
@@ -44,4 +47,8 @@ function handleClickSend() {
     props.sendMessage(newMessage.value)
     newMessage.value = ''
 }
+
+watchEffect(() => {
+    if (conversationStore.activeIndex) newMessage.value = ''
+})
 </script>

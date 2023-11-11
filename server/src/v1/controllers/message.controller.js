@@ -42,7 +42,6 @@ module.exports = {
             const { conversationId } = req.body
             const { _id: userId } = req.user
             const messageService = new MessageService()
-            console.log('=>>>>>>>', files);
             const resutl = await messageService.createImageMessage({ files, conversationId, userId })
             return res.json(resutl)
         } catch (error) {

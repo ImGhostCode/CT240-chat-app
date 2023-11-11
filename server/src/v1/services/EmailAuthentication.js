@@ -1,4 +1,3 @@
-// emailAuthentication.js
 const _User = require("../models/_User.model");
 const ApiError = require("../utils/apiError");
 const ApiResponse = require("../utils/apiResponse");
@@ -33,7 +32,7 @@ class EmailAuthentication extends AuthenticationStrategy {
         }
         if (user && (await user.matchPassword(password))) {
             const { password, ..._user } = user._doc
-            return new ApiResponse(200, 'success', 'Login successful', { ..._user, token: generateToken(user._id), })
+            return new ApiResponse(200, 'success', 'Login successful', { ..._user, token: generateToken(user._id) })
         } else {
             throw new ApiError(401, 'failed', "Invalid Email or Password", null);
         }

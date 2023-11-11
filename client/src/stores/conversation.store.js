@@ -1,8 +1,11 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import conversationService from "../services/conversation.service";
+import { useRouter } from "vue-router";
 
 export const useConversationStore = defineStore("conversation", () => {
+    const router = useRouter()
+
     const conversations = ref([]);
     const isLoading = ref(false);
     const err = ref(null);
@@ -19,6 +22,7 @@ export const useConversationStore = defineStore("conversation", () => {
             conversations.value = res.data;
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
 
@@ -35,12 +39,12 @@ export const useConversationStore = defineStore("conversation", () => {
             if (isExist === -1) {
                 conversations.value.push(res.data)
                 activeIndex.value = conversations.value.length - 1
-
             } else {
                 activeIndex.value = isExist
             }
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -56,6 +60,7 @@ export const useConversationStore = defineStore("conversation", () => {
             conversations.value.unshift(res.data)
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -72,6 +77,7 @@ export const useConversationStore = defineStore("conversation", () => {
             conversations[activeIndex] = res.data
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -87,6 +93,7 @@ export const useConversationStore = defineStore("conversation", () => {
             result.value = res
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -102,6 +109,7 @@ export const useConversationStore = defineStore("conversation", () => {
             result.value = res
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -118,6 +126,7 @@ export const useConversationStore = defineStore("conversation", () => {
             activeIndex.value = null
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }

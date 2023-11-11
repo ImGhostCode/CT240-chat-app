@@ -16,7 +16,9 @@ app.use(cors())
 
 //user middleware
 app.use(helmet())
-app.use(morgan('combined'))
+
+// app.use(morgan('combined'))
+
 // compress responses
 app.use(compression())
 

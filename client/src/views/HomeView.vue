@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
   <div class="w-[65%] h-[80%] bg-white flex overflow-hidden rounded-lg relative">
-    <SideBar />
+    <SideBar class="grow-0" />
     <Conversation />
   </div>
 </template>

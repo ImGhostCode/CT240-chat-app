@@ -50,7 +50,25 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
-    async function getUserStored(data) {
+    const getUserInfo = async () => {
+        isLoading.value = true;
+        result.value = null;
+        err.value = null;
+        try {
+            const res = await authService.getUserInfo();
+            if (res.code === 401 || res.code === 400) throw new Error(res.message);
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+            result.value = res
+            user.value = res.data
+        } catch (error) {
+            err.value = error.message;
+            router.push({ name: 'login' })
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    async function getUserStored() {
         isLoading.value = true;
         result.value = null;
         err.value = null;
@@ -83,6 +101,7 @@ export const useAuthStore = defineStore("auth", () => {
             }
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -99,6 +118,7 @@ export const useAuthStore = defineStore("auth", () => {
             result.value = res
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -110,13 +130,13 @@ export const useAuthStore = defineStore("auth", () => {
         result.value = null;
         try {
             const res = await authService.editAccount(userId, image)
-            console.log(res);
             if (res.code === 400 || res.code === 401 || res.code === 403 || res.code === 404) throw new Error(res.message);
             result.value = res
             user.value = res.data
             localStorage.setItem("userInfo", JSON.stringify(res.data));
         } catch (error) {
             err.value = error.message;
+            router.push({ name: 'login' })
         } finally {
             isLoading.value = false;
         }
@@ -158,7 +178,6 @@ export const useAuthStore = defineStore("auth", () => {
         err.value = null;
         try {
             const res = await authService.resetPassword(data)
-            console.log(res);
             if (res.code === 401 || res.code === 400) throw new Error(res.message);
             result.value = res
         } catch (error) {
@@ -184,6 +203,6 @@ export const useAuthStore = defineStore("auth", () => {
     return {
         register, result, isLoading, err, login, user, getUserStored,
         search, searchUserResult, logout, searchMembersResult, searchAccountResult, deleteAccount,
-        editAccount, sendVerifyCode, resetPassword, checkToken
+        editAccount, sendVerifyCode, resetPassword, checkToken, getUserInfo
     };
 });

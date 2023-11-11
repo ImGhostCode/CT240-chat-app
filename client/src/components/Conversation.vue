@@ -47,8 +47,10 @@ function toggleRemoveMembers() {
 }
 
 async function sendMessage(content) {
-  await messageStore.sendAMessage(content, conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
+  await messageStore.sendAMessage(content, conversationStore.conversations[conversationStore.activeIndex]._id)
   socket.emit("new message", messageStore.newMessage);
+  await conversationStore.fetchAllConversations()
+  conversationStore.activeIndex = 0
 }
 
 async function sendImagesMessage(files) {
@@ -58,6 +60,8 @@ async function sendImagesMessage(files) {
   }
   images.append('conversationId', conversationStore.conversations[conversationStore.activeIndex]._id)
   await messageStore.sendImagesMessage(images)
+  await conversationStore.fetchAllConversations()
+  conversationStore.activeIndex = 0
 }
 
 async function handleDeleteGroup() {
@@ -102,14 +106,14 @@ onMounted(async () => {
     socket.on("stop typing", () => isTyping.value = false);
     if (conversationStore.activeIndex !== null) {
       socket.emit("join chat", conversationStore.conversations[conversationStore.activeIndex]._id);
-      await messageStore.fetchMessages(conversationStore.conversations[conversationStore.activeIndex]._id, authStore.user.token)
+      await messageStore.fetchMessages(conversationStore.conversations[conversationStore.activeIndex]._id)
     }
   })
 })
 </script>
 
 <template>
-  <div class="basis-2/3 flex flex-col" v-if="conversationStore.activeIndex !== null">
+  <div class="basis-3/4 flex flex-col" v-if="conversationStore.activeIndex !== null">
     <div class="h-[50px] bg-indigo-800 text-white w-full flex justify-between items-center px-4 py-8">
       <h2 class="text-2xl">{{ !conversationStore.conversations[conversationStore.activeIndex].isGroupChat
         ? getSender(authStore.user, conversationStore.conversations[conversationStore.activeIndex].users)
@@ -200,7 +204,7 @@ onMounted(async () => {
   </div>
   <div v-else-if="conversationStore.err">{{ conversationStore.err }}</div>
   <div v-else-if="conversationStore.isLoading">Loading...</div>
-  <div v-else class="h-full w-full flex justify-center items-center font-semibold text-2xl text-gray-400">
+  <div v-else class="basis-3/4 w-full h-full flex justify-center items-center font-semibold text-2xl text-gray-400">
     Select a conversation to start chat
   </div>
   <AddMembers v-if="isShow.addMembers" @show="toggleAddMembers" />

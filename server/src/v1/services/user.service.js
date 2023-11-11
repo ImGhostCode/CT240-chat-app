@@ -207,6 +207,10 @@ class UserService {
             })
         return new ApiResponse(200, 'success', 'Delete request successfully', null)
     }
+
+    async getUserInfo({ id }) {
+        return new ApiResponse(200, 'success', 'Found user successfully', await _User.findById(id).select('-password'))
+    }
 }
 
 module.exports = UserService

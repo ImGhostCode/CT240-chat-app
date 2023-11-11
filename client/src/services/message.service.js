@@ -17,7 +17,7 @@ class MessageService {
         ).data;
     }
 
-    async sendImagesMessage({ files }) {
+    async sendImagesMessage(files) {
         return await (
             await this.api.post('/send-images', files, {
                 headers: {

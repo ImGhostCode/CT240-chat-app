@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '../stores/user.store';
+import { useAuthStore } from '../stores/auth.store'
 import { useToast } from 'vue-toast-notification';
 
+const authStore = useAuthStore()
 const userStore = useUserStore()
 const $toast = useToast();
 
@@ -19,6 +21,7 @@ const handleRemoveFriend = async (friendId) => {
         }
         $toast.success(userStore.result.message)
         await handleGetFriendsList()
+        await authStore.getUserInfo()
     }
 }
 

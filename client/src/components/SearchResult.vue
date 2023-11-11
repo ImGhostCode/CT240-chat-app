@@ -1,5 +1,5 @@
 <template>
-    <div class="basis-full overflow-y-scroll" v-if="props.users">
+    <div class="basis-full overflow-y-scroll no-scrollbar" v-if="props.users">
         <div @click="$event => emits('handleClick', user._id)"
             class="px-4 py-2 bg-indigo-700 flex-col text-white mb-2 cursor-pointer shadow-md" v-for="user in props.users"
             :key="user._id">

@@ -15,7 +15,6 @@ async function startServer() {
         const io = require("socket.io")(server, {
             pingTimeout: 60000,
             cors: {
-                // origin: "http://localhost:3052/",
                 credentials: true,
             },
         });
@@ -29,7 +28,6 @@ async function startServer() {
             socket.on('join chat', room => {
                 socket.join(room)
                 console.log(`User joined room: ${room}`);
-
             })
 
             socket.on('typing', room => {

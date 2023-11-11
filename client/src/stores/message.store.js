@@ -11,12 +11,12 @@ export const useMessageStore = defineStore("message", () => {
     const isLoading = ref(false);
     const err = ref(null);
 
-    async function fetchMessages(conversationId, token) {
+    async function fetchMessages(conversationId) {
         isLoading.value = true;
         messages.value = [];
         err.value = null;
         try {
-            const res = await messageService.fetchMessages(conversationId, token);
+            const res = await messageService.fetchMessages(conversationId);
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             messages.value = res.data;
         } catch (error) {
@@ -26,7 +26,7 @@ export const useMessageStore = defineStore("message", () => {
         }
     }
 
-    async function sendAMessage(content, conversationId, token) {
+    async function sendAMessage(content, conversationId) {
         isLoading.value = true;
         err.value = null;
         try {
@@ -46,7 +46,7 @@ export const useMessageStore = defineStore("message", () => {
         err.value = null;
         try {
             let socket = io(ENDPOINT);
-            const res = await messageService.sendImagesMessage({ files });
+            const res = await messageService.sendImagesMessage(files);
             if (res.code === 400 || res.code === 401 || res.code === 403) throw new Error(res.message);
             socket.emit("new images message", res.data);
             let endmessage = res.data.length

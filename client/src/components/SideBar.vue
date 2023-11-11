@@ -1,9 +1,10 @@
 <template>
-    <div class="basis-1/3 flex flex-col bg-indigo-600">
+    <div class="basis-1/4 flex flex-col bg-indigo-600">
         <NavBar />
         <Search :handleSearch="handleSearch" />
-        <SearchResult v-if="authStore.searchUserResult" :users="authStore.searchUserResult" @handleClick="handleClick" />
-        <Conversations v-else />
+        <SearchResult class="grow" v-if="authStore.searchUserResult" :users="authStore.searchUserResult"
+            @handleClick="handleClick" />
+        <Conversations v-else class="grow" />
         <More />
     </div>
 </template>

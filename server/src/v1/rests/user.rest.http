@@ -26,6 +26,10 @@ Content-Type: application/json
     "password": "123456"
 }
 
+### Get user infor
+GET   {{urlDev}}/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2VmN2FmYjM4ODc0MzdkNDQxZDQxMCIsImlhdCI6MTY5OTY5NDIzNiwiZXhwIjoxNjk5NzgwNjM2fQ.VWOabZer8WKKYVxnvBsCsjnT7IrbP8eyGumv-zhPZgw
+
 ### Forgot password
 POST  {{urlDev}}/verify-code
 Content-Type: application/json

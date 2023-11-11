@@ -113,7 +113,6 @@ module.exports = {
         try {
             const { conversationId } = req.params;
             const { _id: userId } = req.user
-            console.log(conversationId, userId);
             const conversationService = new ConversationService()
             const resutl = await conversationService.deleteGroup({ conversationId, userId })
             return res.json(resutl)

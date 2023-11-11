@@ -35,7 +35,6 @@ module.exports = {
             const emailAuthentication = new EmailAuthentication();
             const userService = new UserService(emailAuthentication);
             const { name, email, password, pic } = req.body;
-            console.log(name, email, password);
             if (!name || !email || !password) {
                 throw new ApiError(400, 'failed', "Please Enter all the Feilds", null);
             }
@@ -64,8 +63,8 @@ module.exports = {
                 secure: false,
                 path: '/',
                 sameSite: 'strict',
-
             })
+            delete result.data.token;
             return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })
@@ -92,16 +91,12 @@ module.exports = {
         try {
             let { newPassword } = req.body;
             const { userId } = req.params
-            console.log(newPassword);
             newPassword = newPassword ? JSON.parse(newPassword) : undefined
             if (!userId) throw new ApiError(400, 'falied', "Please Fill all the fields", null);
             const newInfo = { password: newPassword, pic: req.file?.filename || undefined }
-
-
             Object.keys(newInfo).forEach(
                 (key) => newInfo[key] === undefined && delete newInfo[key]
             );
-
             if (newInfo.password) {
                 const salt = await bcrypt.genSalt(10);
                 newInfo.password = await bcrypt.hash(newInfo.password, salt);
@@ -238,6 +233,21 @@ module.exports = {
             const user = req.user
             const friendId = req.params.friendId
             const result = await userService.deleteFriendRequest({ user, friendId })
+            return res.json(result)
+        } catch (error) {
+            return res.json({ ...error, message: error.message })
+        }
+    },
+
+    //@description     Get user
+    //@route           PATCH /api/v1/users/me
+    //@access          Protected
+    getUserInfo: async (req, res, next) => {
+        try {
+            const userService = new UserService()
+            const user = req.user
+            const id = user._id
+            const result = await userService.getUserInfo({ id })
             return res.json(result)
         } catch (error) {
             return res.json({ ...error, message: error.message })

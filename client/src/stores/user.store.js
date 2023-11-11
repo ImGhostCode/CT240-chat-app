@@ -44,7 +44,7 @@ export const useUserStore = defineStore("user", () => {
         try {
             const res = await userService.sendFriendInvitation({ friendId })
             if (res.code !== 200) throw new Error(res.message);
-            result.value = res;
+            result.value = res
         } catch (error) {
             err.value = error.message;
         } finally {

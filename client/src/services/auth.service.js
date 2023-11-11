@@ -52,6 +52,10 @@ class AuthService {
   async resetPassword(data) {
     return await (await this.api.patch(`/reset-password`, data)).data;
   }
+
+  async getUserInfo() {
+    return await (await this.api.get('/me')).data;
+  }
 }
 
 export default new AuthService();

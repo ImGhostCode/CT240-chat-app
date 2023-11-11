@@ -6,7 +6,7 @@
             <input v-model="newName" type="text" class="p-3 border-b-[1px] outline-none w-full mb-3">
             <label for="image"
                 class="h-20 w-20 block border-[3px] border-gray-400 rounded-full mx-auto overflow-hidden mb-2 cursor-pointer">
-                <img :src="url || ENDPOINT + '/public/images/' + conversationStore.conversations[conversationStore.activeIndex].imgGroup || 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg'"
+                <img :src="url || ENDPOINT + '/public/images/' + conversationStore.conversations[conversationStore.activeIndex].imgGroup"
                     alt="avatar" class="h-full w-full">
             </label>
             <input hidden type="file" name="image" id="image" accept="image/png, image/jpeg" @change="onFileSelected"

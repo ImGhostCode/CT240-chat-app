@@ -6,6 +6,7 @@ const router = Router()
 
 router.get('/', verifyToken, userController.allUser)
 router.delete('/:userId', verifyToken, userController.deleteUser)
+router.get('/me', verifyToken, userController.getUserInfo)
 
 router.post('/register', userController.registerUser)
 router.post('/login', userController.loginUser)
