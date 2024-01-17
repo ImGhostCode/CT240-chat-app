@@ -59,10 +59,10 @@ module.exports = {
             }
             const result = await userService.login({ email, password })
             res.cookie('accessToken', result.data.token, {
-                httpOnly: false,
-                secure: false,
+                httpOnly: true,
+                secure: true,
                 path: '/',
-                sameSite: 'strict',
+                sameSite: 'none',
             })
             delete result.data.token;
             return res.json(result)
