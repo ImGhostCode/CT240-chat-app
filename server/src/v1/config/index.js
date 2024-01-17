@@ -5,5 +5,8 @@ module.exports = {
   },
   jwt: {
     jwt_secret: process.env.JWT_SECRET
+  },
+  deploy: {
+    domain: process.env.DEPLOY_DOMAIN
   }
 };

@@ -1,3 +1,4 @@
+const config = require("../config");
 const EmailAuthentication = require("../services/EmailAuthentication")
 const UserService = require("../services/user.service")
 const ApiError = require("../utils/apiError")
@@ -62,7 +63,8 @@ module.exports = {
                 httpOnly: true,
                 secure: true,
                 path: '/',
-                sameSite: 'none',
+                sameSite: 'None',
+                domain: config.deploy.domain
             })
             delete result.data.token;
             return res.json(result)
