@@ -23,9 +23,13 @@ A MEVN Stack Chat app that chat with your friends.
 
 - [x] **Logout**: Users can logout system.
 
-- [ ] **Add friend**: You can add your friend into list friends.
+- [x] **Add friend**: You can add your friend into list friends.
 
-- [ ] **Unfriend**: You can unfriend out of list friends.   
+- [x] **Unfriend**: You can unfriend out of list friends.   
+
+- [x] **Send image messages**: You can send image message to your friends or groups.
+
+- [x] **Reset password**: Users can reset their password.
 
 ## Installation
 
@@ -58,6 +62,14 @@ Upon launching the Chat app, you will be greeted with a user-friendly interface.
  9. **Delete group**: Admin can delete his group.
 
  10. **Logout**: Users can logout system.
+     
+ 11. **Add friend**: You can add your friend into list friends.
+     
+ 12. **Unfriend**: You can unfriend out of list friends.
+     
+ 13. **Send image messages**: You can send image message to your friends or groups.
+     
+14. **Reset password**: Users can reset their password.
 
 ## Contributing
 
@@ -103,7 +115,3 @@ For any questions, issues, or suggestions regarding the Chat App, please contact
 ![Screenshot from 2023-07-21 15-03-16](https://github.com/ImGhostCode/CT240-chat-app/assets/97029516/5baaf373-5ac0-4700-952d-289c0152f966)
 ![Screenshot from 2023-07-21 15-02-57](https://github.com/ImGhostCode/CT240-chat-app/assets/97029516/19c1b245-5d90-419a-9894-5a2a46f3a208)
 ![Screenshot from 2023-07-21 15-02-03](https://github.com/ImGhostCode/CT240-chat-app/assets/97029516/3da363c4-ad85-43c2-86de-70c3cbe6f958)
-
-
-
-
