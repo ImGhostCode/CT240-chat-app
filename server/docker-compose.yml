@@ -1,0 +1,33 @@
+version: '3'
+services:
+  app:
+    container_name: chat-app
+    restart: always
+    build: .
+    ports:
+      - '3051:3051'
+    links:
+      - mongo
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - '6379:6379'
+
+volumes:
+  mongodata:
